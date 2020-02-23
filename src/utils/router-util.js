@@ -22,7 +22,7 @@ import notes from 'pages/notes/notes.js';
     }
   }
 
-  navigate(window.location.pathname);
+  // navigate(window.location.pathname);
 
   window.addEventListener('popstate', () => {
     navigate(window.location.pathname);
