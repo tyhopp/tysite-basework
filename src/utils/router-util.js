@@ -7,23 +7,24 @@ import notes from 'pages/notes/notes.js';
     '/notes': notes
   }
 
+  // TODO - Improve this
   const navigate = path => {
 
-    const currentPage = document.querySelector('[page]');
+    const main = document.querySelector('main[data-page]');
 
-    // TODO - Don't allow routing to same internal path
-    // TODO - Improve this check
-    if (currentPage instanceof HTMLElement) {
-      currentPage.remove();
+    if (main.dataset.page !== path) {
+      const page = main.firstElementChild;
+      if (page) {
+        page.remove();
+      }
+      main.dataset.page = path;
+      routes[path].render();
     }
-
-    routes[path].render();
   }
 
   navigate(window.location.pathname);
 
   window.addEventListener('popstate', () => {
-    console.log(`Navigating to ${window.location.pathname}`);
     navigate(window.location.pathname);
   });
 

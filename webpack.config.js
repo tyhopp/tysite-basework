@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const pages = [
   'index',
-  'notes'
+  // 'notes'
 ];
 
 const createPages = pages => {
@@ -20,7 +20,7 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/pages/index/index.js',
-    notes: './src/pages/notes/notes.js'
+    // notes: './src/pages/notes/notes.js'
   },
   output: {
     filename: '[name].bundle.js',

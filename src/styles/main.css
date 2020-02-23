@@ -19,13 +19,15 @@ html {
   --code: #011627;
 }
 
-html[data-theme=dark] {
-  --text: #FFFFFF;
-  --primary-tint: #10144b;
-  --secondary-tint: #1e225c;
-  --line: #424464;
-  --background: #01111f;
-  --code: #00080f;
+@media (prefers-color-scheme: dark) {
+  html {
+    --text: #FFFFFF;
+    --primary-tint: #10144b;
+    --secondary-tint: #1e225c;
+    --line: #424464;
+    --background: #01111f;
+    --code: #00080f;
+  }
 }
 
 html,
@@ -43,6 +45,10 @@ body {
   font-weight: normal;
   margin: 0;
   background-color: var(--background);
+}
+
+main[data-page] {
+  margin: 5em 0;
 }
 
 h1,

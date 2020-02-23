@@ -4,7 +4,7 @@ import template from './index.html';
 class Index {
 
   render = () => {
-    document.body.appendChild(document.getTemplate(template));
+    document.querySelector('main[data-page]').appendChild(document.getTemplate(template));
   };
   
 }
