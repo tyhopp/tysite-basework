@@ -1,6 +1,5 @@
 // DOM adjustments
 import 'utils/template-util.js';
-import 'utils/skeleton-util.js';
 import 'utils/router-util.js';
 
 // App styles

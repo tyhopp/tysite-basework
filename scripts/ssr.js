@@ -13,7 +13,7 @@ const ssr = async pathname => {
   // Enable request interception
   await page.setRequestInterception(true);
 
-  // Catch script requests and set correct url
+  // Set correct url paths to html files
   page.on('request', request => {
     if (request.resourceType() === 'script') {
       const filename = /\/\/\/(.*)/.exec(request.url())[1];
@@ -24,6 +24,11 @@ const ssr = async pathname => {
       request.continue();
     }
   });
+
+  // Log all failed requests
+  // page.on('requestfailed', request => {
+  //   console.log(`REQUEST FAILURE: ${request.url()} ${request.failure().errorText}`);
+  // });
   
   await page.goto(`file:${path.resolve('dist', `${file}.html`)}`, { waitUntil: 'networkidle0' })
   const html = await page.content();

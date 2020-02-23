@@ -1,11 +1,6 @@
-import index from 'pages/index/index.js';
-import notes from 'pages/notes/notes.js';
+import { routes } from '../routes.js';
 
 (() => {
-  const routes = {
-    '/': index,
-    '/notes': notes
-  }
 
   // TODO - Improve this
   const navigate = path => {
@@ -22,10 +17,10 @@ import notes from 'pages/notes/notes.js';
     }
   }
 
-  // navigate(window.location.pathname);
+  navigate(window.location.pathname);
 
   window.addEventListener('popstate', () => {
-    navigate(window.location.pathname);
+    navigate(window.location.pathname || '/');
   });
 
   document.addEventListener('click', e => {

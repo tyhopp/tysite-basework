@@ -10,6 +10,8 @@ const pages = [
 const createPages = pages => {
   return pages.map(page => {
     return new HtmlWebpackPlugin({
+      title: 'test',
+      template: 'src/index.html',
       filename: `${page}.html`,
       chunks: [page]
     });
@@ -66,7 +68,8 @@ module.exports = {
         test: /\.html$/,
         loader: 'html-loader',
         options: {
-          minimize: false,
+          minimize: true,
+          interpolate: true
         },
       },
       {
