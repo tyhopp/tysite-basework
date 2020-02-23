@@ -10,11 +10,14 @@ import notes from 'pages/notes/notes.js';
   const navigate = path => {
 
     const currentPage = document.querySelector('[page]');
+
+    // TODO - Don't allow routing to same internal path
+    // TODO - Improve this check
     if (currentPage instanceof HTMLElement) {
       currentPage.remove();
     }
-    
-    routes[path.includes('index') ? '/' : path]();
+
+    routes[path].render();
   }
 
   navigate(window.location.pathname);

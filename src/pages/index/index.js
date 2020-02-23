@@ -1,9 +1,12 @@
+import(/* webpackChunkName: "base" */ 'pages/base');
 import template from './index.html';
 
-const render = () => import(/* webpackChunkName: "base" */ 'pages/base');
+class Index {
 
-render().then(() => {
-  document.body.appendChild(document.getTemplate(template));
-});
+  render = () => {
+    document.body.appendChild(document.getTemplate(template));
+  };
+  
+}
 
-export default render;
+export default new Index;

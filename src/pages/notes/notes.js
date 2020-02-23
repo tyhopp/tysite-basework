@@ -1,9 +1,12 @@
+import(/* webpackChunkName: "base" */ 'pages/base');
 import template from './notes.html';
 
-const notes = () => import(/* webpackChunkName: "base" */ 'pages/base');
+class Notes {
 
-notes().then(() => {
-  document.body.appendChild(document.getTemplate(template));
-});
+  render = () => {
+    document.body.appendChild(document.getTemplate(template));
+  };
 
-export default notes;
+}
+
+export default new Notes;
