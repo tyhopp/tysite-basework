@@ -1,13 +1,23 @@
-import { routes } from '../routes.js';
+import routes from '../routes.js';
 
 (() => {
 
   const navigate = path => {
     const main = document.querySelector('main');
-    const route = routes[path] ? routes[path] : 'index';
+
+    // Check if is prerendering
+    const params = new URLSearchParams(window.location.search);
+    const prerenderRoute = params.get('prerender');
+    const route = prerenderRoute
+      ? prerenderRoute
+      : routes[path] ? routes[path] : '404';
+
+    // Remove old template
     if (main.children.length) {
       Array.from(main.children).forEach(child => child.remove());
     }
+
+    // Add new template
     main.appendChild(document.createElement(`page-${route}`));
   }
 

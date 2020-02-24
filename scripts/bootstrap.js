@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const config = require('../webpack.config.js');
 const ssr = require('./ssr');
+const routes = require('../src/routes');
 
 const bundle = new Promise((resolve, reject) => {
   webpack(config).run((err, stats) => {
@@ -13,5 +14,5 @@ const bundle = new Promise((resolve, reject) => {
 });
 
 bundle.then(() => {
-  ssr('/');
+  ssr(routes);
 });

@@ -3,6 +3,4 @@ const routes = {
   '/notes': 'notes'
 };
 
-export {
-  routes
-};
+module.exports = routes;
