@@ -2,25 +2,19 @@ import { routes } from '../routes.js';
 
 (() => {
 
-  // TODO - Improve this
   const navigate = path => {
-
-    const main = document.querySelector('main[data-page]');
-
-    if (main.dataset.page !== path) {
-      const page = main.firstElementChild;
-      if (page) {
-        page.remove();
-      }
-      main.dataset.page = path;
-      routes[path].render();
+    const main = document.querySelector('main');
+    const route = routes[path] ? routes[path] : 'index';
+    if (main.children.length) {
+      Array.from(main.children).forEach(child => child.remove());
     }
+    main.appendChild(document.createElement(`page-${route}`));
   }
 
   navigate(window.location.pathname);
 
   window.addEventListener('popstate', () => {
-    navigate(window.location.pathname || '/');
+    navigate(window.location.pathname);
   });
 
   document.addEventListener('click', e => {

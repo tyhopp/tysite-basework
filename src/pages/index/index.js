@@ -1,12 +1,15 @@
 import(/* webpackChunkName: "base" */ 'pages/base');
 import template from './index.html';
 
-class Index {
+class Index extends HTMLElement {
 
-  render = () => {
-    document.querySelector('main[data-page]').appendChild(document.getTemplate(template));
-  };
-  
+  connectedCallback() {
+    if (!this._initialized) {
+      this.appendChild(document.getTemplate(template));
+      this._initialized = true;
+    }
+  }
+
 }
 
-export default new Index;
+customElements.define('page-index', Index);

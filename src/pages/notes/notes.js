@@ -1,12 +1,15 @@
 import(/* webpackChunkName: "base" */ 'pages/base');
 import template from './notes.html';
 
-class Notes {
+class Notes extends HTMLElement {
 
-  render = () => {
-    document.querySelector('main[data-page]').appendChild(document.getTemplate(template));
-  };
+  connectedCallback() {
+    if (!this._initialized) {
+      this.appendChild(document.getTemplate(template));
+      this._initialized = true;
+    }
+  }
 
 }
 
-export default new Notes;
+customElements.define('page-notes', Notes);
