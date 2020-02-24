@@ -10,7 +10,6 @@ class TyHeader extends HTMLElement {
   connectedCallback() {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
-      this._navs = this.querySelectorAll('.ty-header-nav');
       this._setCurrentNav();
       this._setListeners(true);
       this._initialized = true;

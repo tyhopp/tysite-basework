@@ -82,13 +82,24 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|gif|ico)$/,
         use: [
-          'file-loader'
+          { 
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              esModule: false
+            }
+          }
         ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
-          'file-loader'
+          { 
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
+            }
+          }
         ]
       }
     ]

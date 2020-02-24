@@ -9,22 +9,33 @@ const ssr = async routes => {
     const page = await browser.newPage();
 
     // Output page console logs
-    page.on('console', msg => console.log('PAGE LOG:', msg.text()));
+    page.on('console', msg => console.log('PAGE LOG:', msg.text(), msg.location().url));
 
     // Enable request interception
     await page.setRequestInterception(true);
 
     // Set correct url paths to html files
     page.on('request', request => {
-      if (request.resourceType() === 'script') {
-        const filename = /\/\/\/(.*)/.exec(request.url())[1];
-        request.continue({
-          url: `file:${path.resolve('dist', filename)}`
-        });
-      } else {
-        request.continue();
+      switch(request.resourceType()) {
+        case 'image':
+        case 'media':
+        case 'font':
+        case 'script':
+          const filename = /\/\/\/(.*)/.exec(request.url())[1];
+          request.continue({
+            url: `file:${path.resolve('dist', filename)}`
+          });
+          break;
+        default:
+          request.continue();
+          break;
       }
     });
+
+    // For debugging requests
+    // page.on('requestfailed', request => {
+    //   console.log(request.url() + ' ' + request.failure().errorText);
+    // });
     
     await page.goto(`file:${path.resolve('dist', `${file}.html?prerender=${file}`)}`, { waitUntil: 'networkidle0' });
     const html = await page.content();
