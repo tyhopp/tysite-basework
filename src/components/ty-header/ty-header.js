@@ -9,7 +9,9 @@ class TyHeader extends HTMLElement {
 
   connectedCallback() {
     if (!this._initialized) {
-      this.appendChild(document.getTemplate(template));
+      if (!this.children.length) { // TODO - Figure out why double links appended in prod
+        this.appendChild(document.getTemplate(template));
+      }
       this._setCurrentNav();
       this._setListeners(true);
       this._initialized = true;
