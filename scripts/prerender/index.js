@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
-const routes = require('../src/routes.js');
 
 /**
  * Runs Puppeteer to prerender all pages so that:
@@ -9,6 +8,9 @@ const routes = require('../src/routes.js');
  *  - Loading times are as fast as possible
  */
 const prerender = async () => {
+  // Only require routes after its created
+  const routes = require('../..//src/routes'); // TODO - Refactor
+
   for (const route in routes) {
     const file = routes[route];
     const browser = await puppeteer.launch({ headless: true });

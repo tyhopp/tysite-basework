@@ -1,14 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 
-/**
- * Does all the necessary preparation required to bundle the site.
- */
-const prepare = async () => {
-  await createRoutes();
-  // Add page import statements to base.js
-}
-
 const createRoutes = async () => {
   fs.readdir(path.resolve('src/pages'), (error, pages) => {
     if (error) {
@@ -35,4 +27,4 @@ const createRoutes = async () => {
   });
 }
 
-module.exports = prepare;
+module.exports = createRoutes;
