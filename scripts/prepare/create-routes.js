@@ -1,14 +1,20 @@
 const path = require('path');
 const fs = require('fs');
 
-const createRoutes = async () => {
-  fs.readdir(path.resolve('src/pages'), (error, pages) => {
-    if (error) {
-      console.error(error);
-    }
+  const getPages = () => {
+    return new Promise((resolve, reject) => {
+      fs.readdir(path.resolve('src/pages'), (error, pages) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(pages);
+      });
+    });
+  }
 
+  const createRouteObject = async pages => {
     let routes = {};
-
+    
     pages.forEach(page => {
       const path = page === 'index' ? '/' : `/${page}`;
       Object.defineProperty(routes, path, {
@@ -18,13 +24,29 @@ const createRoutes = async () => {
       });
     });
 
+    return routes;
+  }
+
+  const createRouteFile = routes => {
     const routesFile = `const routes = ${JSON.stringify(routes)};\n\nmodule.exports = routes;`;
 
-    fs.writeFile(path.resolve('src', 'routes.js'), routesFile, error => {
-      if (error) throw error;
-      console.log('Routes created');
+    return new Promise((resolve, reject) => {
+        fs.writeFile(path.resolve('src', 'routes.js'), routesFile, error => {
+        if (error) {
+          reject(error);
+        }
+        resolve();
+      });
     });
-  });
-}
+  }
+
+  const createRoutes = async () => {
+    let pages = await getPages();
+    let routes = await createRouteObject(pages);
+    await createRouteFile(routes);
+    
+    console.log('Routes created');
+    return routes;
+  }
 
 module.exports = createRoutes;

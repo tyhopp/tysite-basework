@@ -35,95 +35,90 @@ const createEntries = routes => {
 /**
  * Main function to generate webpack config.
  */
-const createConfig = async () => {
-  // Only require routes after its created
-  const routes = require('./src/routes'); // TODO - Refactor
-  
-  return {
-    mode: 'development',
-    entry: createEntries(routes),
-    output: {
-      filename: '[name].bundle.js',
-      chunkFilename: '[name].bundle.js',
-      path: path.resolve(__dirname, 'dist'), // Where to find assets
-      publicPath: '/' // Where to serve assets
-    },
-    devtool: 'inline-source-map', // Should be used for dev only
-    devServer: {
-      contentBase: path.resolve(__dirname, 'dist'), // Where to find assets
-      publicPath: '/' // Where to serve assets
-    },
-    plugins: [
-      ...createPages(routes),
-      new CleanWebpackPlugin()
-    ],
-    resolve: {
-      alias: {
-        src: path.resolve(__dirname, 'src/'),
-        pages: path.resolve(__dirname, 'src/pages/'),
-        components: path.resolve(__dirname, 'src/components/'),
-        styles: path.resolve(__dirname, 'src/styles/'),
-        utils: path.resolve(__dirname, 'src/utils/'),
-        assets: path.resolve(__dirname, 'src/assets/')
-      }
-    },
-    module: {
-      rules: [
-        {
-          test: /\.m?js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
+const createConfig = async routes => ({
+  mode: 'development',
+  entry: createEntries(routes),
+  output: {
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'), // Where to find assets
+    publicPath: '/' // Where to serve assets
+  },
+  devtool: 'inline-source-map', // Should be used for dev only
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist'), // Where to find assets
+    publicPath: '/' // Where to serve assets
+  },
+  plugins: [
+    ...createPages(routes),
+    new CleanWebpackPlugin()
+  ],
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, 'src/'),
+      pages: path.resolve(__dirname, 'src/pages/'),
+      components: path.resolve(__dirname, 'src/components/'),
+      styles: path.resolve(__dirname, 'src/styles/'),
+      utils: path.resolve(__dirname, 'src/utils/'),
+      assets: path.resolve(__dirname, 'src/assets/')
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: [
+              '@babel/plugin-proposal-optional-chaining',
+              '@babel/plugin-proposal-class-properties'
+            ]
+          }
+        }
+      },
+      {
+        test: /\.html$/,
+        loader: 'html-loader',
+        options: {
+          minimize: true,
+          interpolate: true
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif|ico)$/,
+        use: [
+          { 
+            loader: 'file-loader',
             options: {
-              presets: ['@babel/preset-env'],
-              plugins: [
-                '@babel/plugin-proposal-optional-chaining',
-                '@babel/plugin-proposal-class-properties'
-              ]
+              name: '[name].[ext]',
+              esModule: false
             }
           }
-        },
-        {
-          test: /\.html$/,
-          loader: 'html-loader',
-          options: {
-            minimize: true,
-            interpolate: true
-          },
-        },
-        {
-          test: /\.css$/,
-          use: [
-            'style-loader',
-            'css-loader'
-          ]
-        },
-        {
-          test: /\.(png|svg|jpg|gif|ico)$/,
-          use: [
-            { 
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-                esModule: false
-              }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          { 
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
             }
-          ]
-        },
-        {
-          test: /\.(woff|woff2|eot|ttf|otf)$/,
-          use: [
-            { 
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]'
-              }
-            }
-          ]
-        }
-      ]
-    }
+          }
+        ]
+      }
+    ]
   }
-};
+});
 
 module.exports = createConfig;

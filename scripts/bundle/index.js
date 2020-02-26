@@ -1,19 +1,12 @@
-const webpack = require('webpack');
 const createConfig = require('../../webpack.config.js');
+const runWebpack = require('./run-webpack');
 
 /**
  * Runs webpack to bundle all assets.
  */
-const bundle = async () => {
-  const config = await createConfig();
-  await webpack(config).run((error, stats) => {
-    if (error) {
-      return error;
-    }
-    
-    console.log('Site bundled');
-    return stats;
-  });
+const bundle = async routes => {
+  const config = await createConfig(routes);
+  await runWebpack(config);
 }
 
 // TODO - Improve error handling output

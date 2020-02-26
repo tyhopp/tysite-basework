@@ -7,10 +7,7 @@ const fs = require('fs');
  *  - The site is usable with JavaScript disabled
  *  - Loading times are as fast as possible
  */
-const prerender = async () => {
-  // Only require routes after its created
-  const routes = require('../..//src/routes'); // TODO - Refactor
-
+const prerender = async routes => {
   for (const route in routes) {
     const file = routes[route];
     const browser = await puppeteer.launch({ headless: true });

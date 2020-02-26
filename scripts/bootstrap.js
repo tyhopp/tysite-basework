@@ -3,9 +3,9 @@ const bundle = require('./bundle');
 const prerender = require('./prerender');
 
 const bootstrap = async () => {
-  await prepare();
-  await bundle();
-  await prerender();
+  const routes = await prepare();
+  await bundle(routes);
+  await prerender(routes);
 }
 
 bootstrap();
