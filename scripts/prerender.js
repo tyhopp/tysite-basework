@@ -1,8 +1,14 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const routes = require('../src/routes.js');
 
-const ssr = async routes => {
+/**
+ * Runs Puppeteer to prerender all pages so that:
+ *  - The site is usable with JavaScript disabled
+ *  - Loading times are as fast as possible
+ */
+const prerender = async () => {
   for (const route in routes) {
     const file = routes[route];
     const browser = await puppeteer.launch({ headless: true });
@@ -50,4 +56,4 @@ const ssr = async routes => {
   return;
 }
 
-module.exports = ssr;
+module.exports = prerender;

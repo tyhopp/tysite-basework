@@ -11,7 +11,7 @@ const createPages = pages => {
   return pages.map(page => {
     return new HtmlWebpackPlugin({
       title: 'test',
-      template: 'src/index.html',
+      template: 'src/base.html',
       filename: `${page}.html`,
       chunks: [page]
     });

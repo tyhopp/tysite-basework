@@ -1,6 +1,3 @@
-const routes = {
-  '/': 'index',
-  '/notes': 'notes'
-};
+const routes = {"/":"index","/notes":"notes"};
 
 module.exports = routes;

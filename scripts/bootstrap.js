@@ -1,18 +1,11 @@
-const webpack = require('webpack');
-const config = require('../webpack.config.js');
-const ssr = require('./ssr');
-const routes = require('../src/routes');
+const prepare = require('./prepare');
+const bundle = require('./bundle');
+const prerender = require('./prerender');
 
-const bundle = new Promise((resolve, reject) => {
-  webpack(config).run((err, stats) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(stats);
-    }
-  });
-});
+const bootstrap = async () => {
+  await prepare();
+  await bundle();
+  await prerender();
+}
 
-bundle.then(() => {
-  ssr(routes);
-});
+bootstrap();
