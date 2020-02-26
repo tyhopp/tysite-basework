@@ -6,6 +6,12 @@ const runWebpack = require('./run-webpack');
  */
 const bundle = async routes => {
   const config = await createConfig(routes);
+
+  if (!config) {
+    console.error('No webpack config found');
+    return;
+  }
+
   await runWebpack(config);
 }
 
