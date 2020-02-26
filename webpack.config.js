@@ -11,25 +11,9 @@ const createPages = routes => {
       title: 'test',
       template: './src/base.html',
       filename: `${page}.html`,
-      chunks: [page]
+      chunks: ['base', page]
     });
   });
-}
-
-/**
- * Helper function to create entries from routes.
- */
-const createEntries = routes => {
-  let entry = {};
-  for (const route in routes) {
-    const file = routes[route];
-    Object.defineProperty(entry, file, {
-      value: `./src/pages/${file}/${file}.js`,
-      writable: false,
-      enumerable: true
-    });
-  }
-  return entry;
 }
 
 /**
@@ -43,7 +27,9 @@ const createConfig = async routes => {
 
   return {
     mode: 'development',
-    entry: createEntries(routes),
+    entry: {
+      base: './src/base.js'
+    },
     output: {
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',

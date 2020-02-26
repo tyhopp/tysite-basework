@@ -1,4 +1,3 @@
-import(/* webpackChunkName: "base" */ '../../base');
 import template from './notes.html';
 
 class Notes extends HTMLElement {

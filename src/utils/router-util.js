@@ -1,7 +1,7 @@
 import routes from '../routes.js';
+import imports from '../imports.js';
 
 (() => {
-
   const navigate = path => {
     const main = document.querySelector('main');
 
@@ -17,8 +17,10 @@ import routes from '../routes.js';
       Array.from(main.children).forEach(child => child.remove());
     }
 
-    // Add new template
-    main.appendChild(document.createElement(`page-${route}`));
+    // Fetch bundle and render template
+    imports[route]().then(() => {
+      main.appendChild(document.createElement(`page-${route}`));
+    });
   }
 
   navigate(window.location.pathname);
