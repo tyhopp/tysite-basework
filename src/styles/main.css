@@ -47,7 +47,7 @@ body {
   background-color: var(--background);
 }
 
-main[data-page] {
+main[id=pages] {
   margin: 5em 0;
 }
 

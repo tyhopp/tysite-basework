@@ -9,6 +9,7 @@ ty-header {
   height: 54px;
   width: 100%;
   background-color: var(--background);
+  border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 

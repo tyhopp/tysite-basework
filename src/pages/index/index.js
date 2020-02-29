@@ -1,4 +1,5 @@
 import template from './index.html';
+import './index.css';
 
 class Index extends HTMLElement {
 
