@@ -1,27 +1,29 @@
 # Tysite (Webpack edition)
-This site implements three key features:
+Reengineering the killer features of Gatsby without React.
 
-### Prerendering
-Makes the site:
-  - As they say, *blazing fast* on first page load 🔥
+## Features
+#### Prerendering
+Build an SPA without the drawbacks of an SPA. Benefits:
+  - Understandable to search engine crawlers (yay, SEO)
   - Usuable with JavaScript disabled in the browser
+  - As they say, *blazing fast* on first page load 🔥
 
-### Push state routing
-Makes the site:
-  - More efficient because all resources are not reloaded on page load
-  - Smoother because there is no flash of white as the page reloads on navigation
+#### Push state routing
+Navigate using native browser APIs. Benefits:
+  - Avoids loading all resources each page needs on each navigation
+  - Removes flash of white as the page reloads on navigation
 
-### Code splitting
-Makes the site:
-  - Leaner because resources are only loaded as they are needed
-  - Intelligent because shared resources are only loaded once across the site
+#### Code splitting
+Load only what you need when you need it. Benefits:
+  - Fewer overall network requests == less bandwidth used
+  - Shared resources only loaded once across the site
 
 ## Why not just use something like Gatsby or VuePress?
-  - There's merit to reengineering your favorite projects to learn
-  - Enjoy the killer features of other libraries with substantially fewer dependencies
+  - Understand deeply how other projects work by building your own
+  - Enjoy killer features other projects offer with substantially fewer dependencies
   - Write your JavaScript how you want instead of working within a framework
 
-## What else is this site built with?
+## What is this site built with?
   - [Webpack](https://webpack.js.org)
   - [Babel](https://babeljs.io)
   - [Web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components), specifically the [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) portion
@@ -35,4 +37,4 @@ Makes the site:
   - [ ] CSS bundling improvements
 
 ## Look into
-  - Extraction into a framework?
+  - Extraction into a generalized project
