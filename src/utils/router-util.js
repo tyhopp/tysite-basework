@@ -1,5 +1,4 @@
 import routes from '../routes.js';
-import imports from '../imports.js';
 
 (() => {
   const navigate = path => {
@@ -18,7 +17,7 @@ import imports from '../imports.js';
     }
 
     // Fetch bundle and render template
-    imports[route]().then(() => {
+    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${route}`).then(() => {
       main.appendChild(document.createElement(`page-${route}`));
     });
   }

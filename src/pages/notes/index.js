@@ -1,4 +1,4 @@
-import template from './notes.html';
+import template from './index.html';
 
 class Notes extends HTMLElement {
 
