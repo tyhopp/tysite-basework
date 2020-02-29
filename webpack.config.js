@@ -9,7 +9,6 @@ const path = require('path');
 const createPages = routes => {
   return Object.values(routes).map(page => {
     return new HtmlWebpackPlugin({
-      title: 'test',
       template: './src/base.html',
       filename: `${page}.html`,
       chunks: ['base', page]
@@ -77,9 +76,8 @@ const createConfig = async routes => {
           test: /\.html$/,
           loader: 'html-loader',
           options: {
-            minimize: true,
             interpolate: true
-          },
+          }
         },
         {
           test: /\.css$/,

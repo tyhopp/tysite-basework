@@ -30,10 +30,12 @@ Load only what you need when you need it. Benefits:
   - [Custom properties](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements)
   
 ## Todos
-  - [x] Dynamically import pages without pre-generating the import statements
+  - [x] Dynamically import pages on navigation
   - [x] CSS bundling improvements
-  - [ ] Dynamic `<head>` swapping
-  - [ ] Prefetch functionality
+  - [x] Base template `<head>` href interpolation
+  - [ ] Migrate React components to web components
+  - [ ] GraphQL services
+  - [ ] Prefetch/preload links
   - [ ] Webpack config differentiated by environment
 
 ## Look into

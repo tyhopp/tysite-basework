@@ -21,7 +21,12 @@ const prerender = async routes => {
 
     // Set correct url paths to html files
     page.on('request', request => {
-      switch(request.resourceType()) {
+      if (!request.url().startsWith('file')) {
+        request.continue();
+        return;
+      }
+
+      switch (request.resourceType()) {
         case 'image':
         case 'media':
         case 'font':
