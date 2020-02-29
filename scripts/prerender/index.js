@@ -26,6 +26,7 @@ const prerender = async routes => {
         case 'media':
         case 'font':
         case 'script':
+        case 'stylesheet':
           const filename = /\/\/\/(.*)/.exec(request.url())[1];
           request.continue({
             url: `file:${path.resolve('dist', filename)}`

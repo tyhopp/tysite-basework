@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 /**
@@ -43,6 +44,7 @@ const createConfig = async routes => {
     },
     plugins: [
       ...createPages(routes),
+      new MiniCssExtractPlugin(),
       new CleanWebpackPlugin()
     ],
     resolve: {
@@ -82,7 +84,7 @@ const createConfig = async routes => {
         {
           test: /\.css$/,
           use: [
-            'style-loader',
+            MiniCssExtractPlugin.loader,
             'css-loader'
           ]
         },

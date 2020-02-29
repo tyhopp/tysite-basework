@@ -31,10 +31,10 @@ Load only what you need when you need it. Benefits:
   
 ## Todos
   - [x] Dynamically import pages without pre-generating the import statements
-  - [ ] Prefetch functionality
+  - [x] CSS bundling improvements
   - [ ] Dynamic `<head>` swapping
+  - [ ] Prefetch functionality
   - [ ] Webpack config differentiated by environment
-  - [ ] CSS bundling improvements
 
 ## Look into
   - Extraction into a generalized project

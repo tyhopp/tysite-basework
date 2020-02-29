@@ -1,4 +1,4 @@
-// DOM adjustments
+// Key utilities
 import 'utils/template-util.js';
 import 'utils/router-util.js';
 
