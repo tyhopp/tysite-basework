@@ -17,9 +17,18 @@ import routes from '../routes.js';
     }
 
     // Fetch bundle and render template
-    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${route}`).then(() => {
-      main.appendChild(document.createElement(`page-${route}`));
-    });
+    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${route}`)
+      .then(() => {
+        const page = document.createElement(`page-${route}`);
+        main.appendChild(page);
+
+        import(/* webpackChunkName: "[request]", webpackInclude: /\.json$/ */`../data/${route}-data`)
+          .then(data => {
+            if (typeof page.setData === 'function') {
+              page.setData(data.default);
+            }
+          });
+      });
   }
 
   navigate(window.location.pathname);

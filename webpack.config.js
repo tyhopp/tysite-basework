@@ -51,6 +51,7 @@ const createConfig = async routes => {
         src: path.resolve(__dirname, 'src/'),
         pages: path.resolve(__dirname, 'src/pages/'),
         components: path.resolve(__dirname, 'src/components/'),
+        services: path.resolve(__dirname, 'src/services/'),
         styles: path.resolve(__dirname, 'src/styles/'),
         utils: path.resolve(__dirname, 'src/utils/'),
         assets: path.resolve(__dirname, 'src/assets/')
@@ -66,8 +67,7 @@ const createConfig = async routes => {
             options: {
               presets: ['@babel/preset-env'],
               plugins: [
-                '@babel/plugin-proposal-optional-chaining',
-                '@babel/plugin-proposal-class-properties'
+                '@babel/plugin-proposal-optional-chaining'
               ]
             }
           }
