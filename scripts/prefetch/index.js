@@ -35,7 +35,7 @@ const prefetch = async routes => {
             const assignBlock = `const ${pages[index]}Prefetch = () => `;
             const exportStatement = `module.exports = ${pages[index]}Prefetch;`;
             const final = `${requireStatement}\n\n${assignBlock}${code}\n\n${exportStatement}`;
-            const filepath = name => `${path.resolve('src/data')}/${pages[index]}-${name}.js`;
+            const filepath = name => `${path.resolve('dist')}/${pages[index]}-${name}.js`;
 
             new Promise((resolve, reject) => {
               fs.writeFile(filepath('prerender'), final, error => {

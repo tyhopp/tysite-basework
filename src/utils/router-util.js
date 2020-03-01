@@ -21,11 +21,19 @@ import routes from '../routes.js';
       .then(() => {
         const page = document.createElement(`page-${route}`);
         main.appendChild(page);
+        
+        // TODO - Create caching mechanism
 
-        import(/* webpackChunkName: "[request]", webpackInclude: /\.json$/ */`../data/${route}-data`)
+        fetch(`/${route}-data.json`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+          .then(response => response.json())
           .then(data => {
             if (typeof page.setData === 'function') {
-              page.setData(data.default);
+              page.setData(data);
             }
           });
       });

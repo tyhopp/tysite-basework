@@ -44,7 +44,7 @@ const createConfig = async routes => {
     plugins: [
       ...createPages(routes),
       new MiniCssExtractPlugin(),
-      new CleanWebpackPlugin()
+      // new CleanWebpackPlugin()
     ],
     resolve: {
       alias: {
