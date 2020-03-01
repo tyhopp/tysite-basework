@@ -33,8 +33,8 @@ Loads only what you need when you need it:
   - [x] Dynamically import pages on navigation
   - [x] CSS bundling improvements
   - [x] Base template `<head>` href interpolation
-  - [ ] Migrate React components to web components
-  - [ ] GraphQL services
+  - [x] Implement prefetching with Babel parser, traverse and generate
+  - [ ] Migrate remaining React components to web components
   - [ ] Prefetch/preload links
   - [ ] Webpack config differentiated by environment
 
