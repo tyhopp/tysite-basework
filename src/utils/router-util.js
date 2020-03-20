@@ -32,7 +32,7 @@ import routes from '../routes.js';
         })
           .then(response => response.json())
           .then(data => {
-            if (typeof page.setData === 'function') {
+            if (page.setData && typeof page.setData === 'function') {
               page.setData(data);
             }
           });

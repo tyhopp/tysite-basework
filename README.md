@@ -34,9 +34,12 @@ Loads only what you need when you need it:
   - [x] CSS bundling improvements
   - [x] Base template `<head>` href interpolation
   - [x] Implement prefetching with Babel parser, traverse and generate
+  - [x] Flatten Contentful content models
+  - [ ] Create markdown parser build step with [unified](https://unifiedjs.com)
   - [ ] Migrate remaining React components to web components
   - [ ] Prefetch/preload links
   - [ ] Webpack config differentiated by environment
+  - [ ] Fix kinks in webpack-dev-server
 
 ## Look into
   - Extraction into a generalized project

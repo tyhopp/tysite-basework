@@ -24,7 +24,7 @@ class Index extends HTMLElement {
       }
     })
       .then(response => response.json())
-      .then(data => data.includes)
+      .then(data => data)
       .catch(error => {
         console.log(error);
       });
