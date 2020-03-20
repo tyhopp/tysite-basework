@@ -24,14 +24,19 @@ class Index extends HTMLElement {
       }
     })
       .then(response => response.json())
-      .then(data => data)
+      .then(data => {
+        const transformations = {
+          markdown: ['data.items.fields.description']
+        }
+        return { transformations, data };
+      })
       .catch(error => {
         console.log(error);
       });
   }
 
   setData(data) {
-    console.log('Prefetched data:', data);
+    console.log(data);
   }
 }
 

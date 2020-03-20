@@ -15,7 +15,7 @@ const getPageJavaScript = page => {
   });
 }
 
-// TODO - Refactor this, ensure async await working correctly
+// TODO - Fix async
 const prefetch = async routes => {
   const pages = Object.values(routes);
   const files = pages.map(async page => await getPageJavaScript(page));
