@@ -13,13 +13,10 @@ const prerender = async routes => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
-    // Output page console logs
-    page.on('console', msg => console.log('PAGE LOG:', msg.text(), msg.location().url));
-
     // Enable request interception
     await page.setRequestInterception(true);
 
-    // Set correct url paths to html files
+    // Set correct url paths for local files
     page.on('request', request => {
       if (!request.url().startsWith('file')) {
         request.continue();
@@ -42,6 +39,9 @@ const prerender = async routes => {
           break;
       }
     });
+
+    // Output page console logs
+    // page.on('console', msg => console.log('PAGE LOG:', msg.text(), msg.location().url));
 
     // For debugging requests
     // page.on('requestfailed', request => {

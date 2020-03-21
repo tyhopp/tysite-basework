@@ -9,9 +9,9 @@ const bootstrap = async () => {
   dotenv.config();
   const routes = await prepare();
   await prefetch(routes);
-  await transform(routes); // TODO - Fix async
-  // // await bundle(routes);
-  // // await prerender(routes);
+  await transform(routes);
+  await bundle(routes);
+  await prerender(routes);
 }
 
 bootstrap();

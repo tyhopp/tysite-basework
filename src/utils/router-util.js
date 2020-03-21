@@ -24,7 +24,7 @@ import routes from '../routes.js';
         
         // TODO - Create caching mechanism
 
-        fetch(`/${route}-data.json`, {
+        fetch(`${route}-data.json`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -35,6 +35,9 @@ import routes from '../routes.js';
             if (page.setData && typeof page.setData === 'function') {
               page.setData(data);
             }
+          })
+          .catch(error => {
+            console.error('Failed to fetch data.', error);
           });
       });
   }

@@ -23,7 +23,6 @@ class Notes extends HTMLElement {
       }
     })
       .then(response => response.json())
-      .then(data => data.items)
       .catch(error => {
         console.log(error);
       });
