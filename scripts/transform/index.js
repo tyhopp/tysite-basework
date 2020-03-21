@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { transformMarkdown } = require('./markdown');
+const { markdownToHtml } = require('./markdown-to-html');
 
 const getPageData = page => {
   return new Promise((resolve, reject) => {
@@ -41,7 +41,7 @@ const performTransformations = buffer => {
   }
   for (const key in transformationObject) {
     switch (key) {
-      case 'markdown':
+      case 'markdown-to-html':
         const markdownTransformations = transformationObject[key];
         if (!markdownTransformations) {
           return;
@@ -51,7 +51,7 @@ const performTransformations = buffer => {
           const transformationPath = item.split('.');
           let ref = objectData;
           transformationPath.forEach((section, index) => {
-            dig(ref, section, index, transformationPath, transformMarkdown);
+            dig(ref, section, index, transformationPath, markdownToHtml);
           });
           objectData = ref;
         });

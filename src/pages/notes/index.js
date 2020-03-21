@@ -9,6 +9,7 @@ class Notes extends HTMLElement {
     }
   }
 
+  // TODO - Refactor to use services
   prefetch() {
     const base = 'https://cdn.contentful.com';
     const path = `spaces/${process.env.CONTENTFUL_SPACE}/environments/master`;
@@ -23,6 +24,12 @@ class Notes extends HTMLElement {
       }
     })
       .then(response => response.json())
+      .then(data => {
+        const transformations = {
+          'markdown-to-html': ['data.items.fields.body']
+        }
+        return { transformations, data }
+      })
       .catch(error => {
         console.log(error);
       });

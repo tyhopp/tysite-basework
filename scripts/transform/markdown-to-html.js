@@ -4,7 +4,7 @@ const remark2rehype = require('remark-rehype')
 const html = require('rehype-stringify');
 
 // TODO - Fix async
-function transformMarkdown(rawMarkdown) {
+function markdownToHtml(rawMarkdown) {
   return unified()
     .use(markdown)
     .use(remark2rehype)
@@ -13,5 +13,5 @@ function transformMarkdown(rawMarkdown) {
 }
 
 module.exports = {
-  transformMarkdown
+  markdownToHtml
 }

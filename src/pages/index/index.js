@@ -10,6 +10,7 @@ class Index extends HTMLElement {
     }
   }
 
+  // TODO - Refactor to use services
   prefetch() {
     const base = 'https://cdn.contentful.com';
     const path = `spaces/${process.env.CONTENTFUL_SPACE}/environments/master`;
@@ -26,7 +27,7 @@ class Index extends HTMLElement {
       .then(response => response.json())
       .then(data => {
         const transformations = {
-          markdown: ['data.items.fields.description']
+          'markdown-to-html': ['data.items.fields.description']
         }
         return { transformations, data };
       })
