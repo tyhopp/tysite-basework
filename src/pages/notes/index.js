@@ -35,9 +35,7 @@ class Notes extends HTMLElement {
       });
   }
 
-  setData(data) {
-    console.log('Prefetched data:', data);
-  }
+  setData(data) {}
 }
 
 customElements.define('page-notes', Notes);

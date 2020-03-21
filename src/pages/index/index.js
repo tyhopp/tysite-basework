@@ -1,11 +1,14 @@
 import template from './index.html';
 import './index.css';
+// TODO - Find a more elegant way to do this
+const importCard = import(/* webpackChunkName: "ty-card" */'components/ty-card/ty-card.js');
 
 class Index extends HTMLElement {
 
   connectedCallback() {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
+      this._cardsContainer = this.querySelector('.index-cards');
       this._initialized = true;
     }
   }
@@ -37,7 +40,15 @@ class Index extends HTMLElement {
   }
 
   setData(data) {
-    console.log(data);
+    const portfolioItems = data?.data?.items || [];
+    portfolioItems.forEach(portfolioItem => {
+      const data = portfolioItem.fields;
+      importCard.then(() => {
+        const card = document.createElement('ty-card');
+        this._cardsContainer.appendChild(card);
+        card.setData(data);
+      })
+    });
   }
 }
 

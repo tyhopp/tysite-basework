@@ -9,7 +9,7 @@ class TyCard extends HTMLElement {
       this._logo = this.querySelector('.ty-card-logo');
       this._title = this.querySelector('.ty-card-title');
       this._position = this.querySelector('.ty-card-position');
-      this._list = this.querySelector('.ty-card-list');
+      this._description = this.querySelector('.ty-card-description');
       this._button = this.querySelector('.ty-card-button');
       this._theme = document.querySelector('html').dataset.theme;
       this._initialized = true;
@@ -18,11 +18,12 @@ class TyCard extends HTMLElement {
 
   setData(data) {
     const { logo, darkLogo, title, position, description, link } = data;
-    this._setLogo({ lightLogo: logo, darkLogo });
+    // TODO - Resolve image url
+    // this._setLogo({ lightLogo: logo, darkLogo });
     this._title.textContent = title;
     this._position.textContent = position;
-    // TODO - Parse description markdown and display
-    this._setButton(link);
+    this._description.innerHTML = description;
+    this._setButton({ href: link });
   }
 
   _setLogo({ lightLogo , darkLogo }) {
@@ -31,7 +32,7 @@ class TyCard extends HTMLElement {
     this._logo.setAttribute('src', logo?.file?.url);
   }
 
-  _setButton({ href, text, accent }) {
+  _setButton({ href, text = 'See company', accent }) {
     this._button.href = href;
     this._button.textContent = text;
     this._button.style.backgroundColor = accent;

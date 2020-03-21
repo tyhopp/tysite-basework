@@ -10,7 +10,10 @@ const fs = require('fs');
 const prerender = async routes => {
   for (const route in routes) {
     const file = routes[route];
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--disable-web-security']
+    });
     const page = await browser.newPage();
 
     // Enable request interception
@@ -40,13 +43,26 @@ const prerender = async routes => {
       }
     });
 
-    // Output page console logs
-    // page.on('console', msg => console.log('PAGE LOG:', msg.text(), msg.location().url));
-
     // For debugging requests
     // page.on('requestfailed', request => {
     //   console.log(request.url() + ' ' + request.failure().errorText);
     // });
+
+    // Output console logs
+    page.on('console', async msg => {
+      const args = await msg.args();
+      args.forEach(async arg => {
+        const value = await arg.jsonValue();
+        // Value is serializable
+        if (JSON.stringify(value) !== JSON.stringify({})) {
+          console.log(`PAGE LOG: ${value}`);
+        }
+        // Ualue is unserializable (or an empty oject)
+        else {
+          console.log(`PAGE LOG: ${arg._remoteObject.description}`);
+        }
+      });
+    });
     
     await page.goto(`file:${path.resolve('dist', `${file}.html?prerender=${file}`)}`, { waitUntil: 'networkidle0' });
     const html = await page.content();

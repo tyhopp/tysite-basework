@@ -22,22 +22,37 @@ import routes from '../routes.js';
         const page = document.createElement(`page-${route}`);
         main.appendChild(page);
         
-        // TODO - Create caching mechanism
+        // TODO - Create caching mechanism, or decide to leave caching to browser
 
-        fetch(`${route}-data.json`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(response => response.json())
+        const fetchPageData = url => {
+          return new Promise((resolve, reject) => {
+            const request = new XMLHttpRequest;
+            request.open('GET', url, true);
+            request.onreadystatechange = () => {
+              if (request.readyState == 4) {
+                resolve(request.responseText);
+              }
+            }
+            request.onerror = error => {
+              reject(error);
+            }
+            request.send(null);
+          });
+        }
+        
+        fetchPageData(`${route}-data.json`)
           .then(data => {
-            if (page.setData && typeof page.setData === 'function') {
-              page.setData(data);
+            try {
+              const json = JSON.parse(data);
+              if (page.setData && typeof page.setData === 'function') {
+                page.setData(json);
+              }
+            } catch (error) {
+              console.error('Failed to parse page data', error);
             }
           })
           .catch(error => {
-            console.error('Failed to fetch data.', error);
+            console.error('Failed to fetch page data', error);
           });
       });
   }
