@@ -36,11 +36,11 @@ Loads only what you need when you need it:
   - [x] Implement prefetching with Babel parser, traverse and generate
   - [x] Flatten Contentful content models
   - [x] Create markdown parser build step with [unified](https://unifiedjs.com)
-  - [ ] Fix async in prefetch and transform step
+  - [x] Refactor async in prefetch and transform step
   - [ ] Migrate remaining React components to web components
-  - [ ] Prefetch/preload links
-  - [ ] Webpack config differentiated by environment
   - [ ] Fix kinks in webpack-dev-server
+  - [ ] Webpack config differentiated by environment
+  - [ ] Prefetch/preload links
 
 ## Look into
   - Extraction into a generalized project
