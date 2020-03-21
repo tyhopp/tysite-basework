@@ -34,7 +34,11 @@ const parsePrefetchMethod = async (page, buffer) => {
         const final = `${requireStatement}\n\n${assignBlock}${code}\n\n${exportStatement}`;
         // Only sync code can be run in visitors, see:
         // https://github.com/babel/babel/blob/f6c7bf36cec81baaba8c37e572985bb59ca334b1/packages/babel-traverse/src/path/context.js#L34-L37
-        fs.writeFileSync(`${path.resolve('dist')}/${page}-prefetch.js`, final);
+        const targetPath = `${path.resolve('dist')}/${page}-prefetch.js`;
+        if (!fs.existsSync(path.resolve('dist'))) {
+          fs.mkdirSync(path.resolve('dist'));
+        }
+        fs.writeFileSync(targetPath, final);
       }
     }
   });
