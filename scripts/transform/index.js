@@ -15,6 +15,7 @@ const getPageData = page => {
 
 // TODO - Fix async
 const transform = async routes => {
+  console.log('TRANSFORMING');
   const pages = Object.values(routes);
   const dataFiles = pages.map(async page => await getPageData(page));
   dataFiles.forEach((dataFile, index) => {
