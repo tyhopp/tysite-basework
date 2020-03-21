@@ -1,5 +1,5 @@
 # Tysite (Webpack edition)
-Reengineering the best features of Gatsby without React.
+Implementing modern web practices with minimal dependencies. Inspired by Gatsby.
 
 ## Features
 #### Prerendering
