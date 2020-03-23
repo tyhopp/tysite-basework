@@ -41,14 +41,26 @@ class Index extends HTMLElement {
 
   setData(data) {
     const portfolioItems = data?.data?.items || [];
+    const assets = data?.data?.includes?.Asset;
     portfolioItems.forEach(portfolioItem => {
-      const data = portfolioItem.fields;
+      const data = portfolioItem?.fields;
+      data.logo = this._getAsset(assets, data?.logo?.sys?.id);
+      data.darkLogo = this._getAsset(assets, data?.darkLogo?.sys?.id)
       importCard.then(() => {
         const card = document.createElement('ty-card');
         this._cardsContainer.appendChild(card);
         card.setData(data);
-      })
+      });
     });
+  }
+
+  _getAsset(assets, id) {
+    for (let i = 0; i < assets.length; i++) {
+      const asset = assets[i];
+      if (asset?.sys?.id === id) {
+        return asset.fields;
+      }
+    };
   }
 }
 

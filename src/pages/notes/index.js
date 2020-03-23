@@ -35,7 +35,9 @@ class Notes extends HTMLElement {
       });
   }
 
-  setData(data) {}
+  setData(data) {
+    
+  }
 }
 
 customElements.define('page-notes', Notes);

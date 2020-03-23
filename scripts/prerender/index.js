@@ -21,7 +21,7 @@ const prerender = async routes => {
 
     // Set correct url paths for local files
     page.on('request', request => {
-      if (!request.url().startsWith('file')) {
+      if (!request.url().startsWith('file:///')) { // Local file scheme
         request.continue();
         return;
       }
