@@ -1,6 +1,6 @@
 import template from './ty-card.html';
 import './ty-card.css';
-import { themeObserver } from 'utils/mutation-util';
+import { theme } from 'utils/theme-util';
 
 class TyCard extends HTMLElement {
   constructor() {
@@ -16,39 +16,30 @@ class TyCard extends HTMLElement {
       this._position = this.querySelector('.ty-card-position');
       this._description = this.querySelector('.ty-card-description');
       this._button = this.querySelector('.ty-card-button');
-      this._theme = document.querySelector('html').dataset.theme;
-      this._setListeners(true);
+      this._theme = theme({ callback: this._onThemeChange });
+      this._theme.subscribe();
       this._initialized = true;
     }
   }
 
   disconnectedCallback() {
-    // this._setListeners(false);
+    this._theme.unsubscribe();
   }
 
   setData({ logo, darkLogo, title, position, description, link } = {}) {
     this._lightLogo = logo;
     this._darkLogo = darkLogo;
-    this._setLogo({ logo, darkLogo, theme: this._theme });
+    this._setLogo({ theme: this._theme.initial });
     this._title.textContent = title;
     this._position.textContent = position;
     this._description.innerHTML = description;
     this._setButton({ href: link });
   }
 
-  _setListeners(flag) {
-    themeObserver()
-      .then(theme => this._onThemeChange(theme))
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
-  _setLogo({ logo, darkLogo, theme }) {
-    const themedLogo = theme === 'dark' ? darkLogo : logo;
-    console.log(themedLogo);
-    this._logo.setAttribute('alt', themedLogo?.description);
-    this._logo.setAttribute('src', themedLogo?.file?.url);
+  _setLogo({ theme = 'light' }) {
+    const logo = theme === 'dark' ? this._darkLogo : this._lightLogo;
+    this._logo.setAttribute('alt', logo?.description);
+    this._logo.setAttribute('src', logo?.file?.url);
   }
 
   _setButton({ href, text = 'See company', accent }) {
@@ -58,8 +49,7 @@ class TyCard extends HTMLElement {
   }
 
   _onThemeChange(theme) {
-    console.log(theme);
-    this._setLogo({ logo: this._lightLogo, darkLogo: this._darkLogo, theme });
+    this._setLogo({ theme });
   }
 }
 
