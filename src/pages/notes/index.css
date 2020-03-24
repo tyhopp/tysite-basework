@@ -1,0 +1,16 @@
+page-notes {
+  display: block;
+  margin: 0 auto;
+  padding: 0 1em;
+  max-width: 440px;
+}
+
+@media (max-width: 400px) {
+  page-notes {
+    padding: 0 0.5em;
+  }
+}
+
+.notes-title {
+  text-align: center;
+}

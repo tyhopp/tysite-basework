@@ -1,4 +1,5 @@
 import template from './index.html';
+import './index.css'; 
 
 class Notes extends HTMLElement {
 
@@ -36,7 +37,20 @@ class Notes extends HTMLElement {
   }
 
   setData(data) {
-    
+    const notes = data?.data?.items || [];
+    this._setFilters(notes)
+  }
+
+  _setFilters(notes) {
+    const categories = notes
+      .map(note => note.fields.category)
+      .flat()
+      .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
+    // TODO - Set radio buttons for each category
+  }
+
+  _setNotes() {
+    // TODO - Display all notes
   }
 }
 
