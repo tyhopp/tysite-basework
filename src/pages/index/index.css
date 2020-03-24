@@ -35,18 +35,3 @@ page-index {
 .index-cards .ty-card-button {
   color: #FFFFFF;
 }
-
-.ty-card-list-item--flyright {
-  margin: 0 2em;
-  list-style: url('../../assets/svg/list-item-purple.svg');
-}
-
-.ty-card-list-item--edenspiekermann {
-  margin: 0 2em;
-  list-style: url('../../assets/svg/list-item-red.svg');
-}
-
-.ty-card-list-item--bytedance {
-  margin: 0 2em;
-  list-style: url('../../assets/svg/list-item-blue.svg');
-}

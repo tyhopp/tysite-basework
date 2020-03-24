@@ -26,14 +26,15 @@ class TyCard extends HTMLElement {
     this._theme.unsubscribe();
   }
 
-  setData({ logo, darkLogo, title, position, description, link } = {}) {
+  setData({ logo, darkLogo, title, position, description, link, accent } = {}) {
     this._lightLogo = logo;
     this._darkLogo = darkLogo;
     this._setLogo({ theme: this._theme.initial });
     this._title.textContent = title;
     this._position.textContent = position;
     this._description.innerHTML = description;
-    this._setButton({ href: link });
+    this._description.classList.add(`ty-card-description--${title.toLowerCase()}`);
+    this._setButton({ href: link, accent });
   }
 
   _setLogo({ theme = 'light' }) {

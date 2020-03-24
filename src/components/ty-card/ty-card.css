@@ -13,8 +13,20 @@ ty-card {
   margin: 0;
 }
 
-.ty-card-list-item {
+.ty-card-description {
   font-size: 16px;
   line-height: 28px;
   margin-bottom: 0.25em;
+}
+
+.ty-card-description--flyright li {
+  list-style: url('../../assets/svg/list-item-purple.svg');
+}
+
+.ty-card-description--edenspiekermann li {
+  list-style: url('../../assets/svg/list-item-red.svg');
+}
+
+.ty-card-description--bytedance li {
+  list-style: url('../../assets/svg/list-item-blue.svg');
 }

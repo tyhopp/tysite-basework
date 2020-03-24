@@ -41,7 +41,12 @@ class Index extends HTMLElement {
 
   setData(data) {
     const portfolioItems = data?.data?.items || [];
+    portfolioItems.sort((a, b) => a?.fields?.order - b?.fields?.order);
     const assets = data?.data?.includes?.Asset;
+    this._setCards(portfolioItems, assets);
+  }
+
+  _setCards(portfolioItems, assets) {
     portfolioItems.forEach(portfolioItem => {
       const data = portfolioItem?.fields;
       data.logo = this._getAsset(assets, data?.logo?.sys?.id);
