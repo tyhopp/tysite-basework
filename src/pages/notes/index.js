@@ -8,6 +8,7 @@ class Notes extends HTMLElement {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
       this._filters = this.querySelector('.notes-filters');
+      this._previews = this.querySelector('.notes-previews');
       this._initialized = true;
     }
   }
@@ -41,11 +42,12 @@ class Notes extends HTMLElement {
   setData(data) {
     const notes = data?.data?.items || [];
     this._setFilters(notes)
+    this._setNotes(notes);
   }
 
   _setFilters(notes) {
     const categories = notes
-      .map(note => note.fields.category)
+      .map(note => note?.fields?.category)
       .flat()
       .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
 
@@ -62,8 +64,25 @@ class Notes extends HTMLElement {
       });
   }
 
-  _setNotes() {
-    // TODO - Display all notes
+  _setNotes(notes) {
+    notes.forEach(note => {
+      // TODO - Refactor to use document fragment
+      const preview = document.createElement('article');
+      const title = document.createElement('h3');
+      const titleAnchor = document.createElement('a');
+      const description = document.createElement('p');
+      preview.classList.add('notes-preview-item');
+      title.classList.add('notes-preview-item-title');
+      titleAnchor.classList.add('notes-preview-item-title-anchor');
+      description.classList.add('notes-preview-item-description');
+      title.textContent = note?.fields?.title;
+      description.textContent = note?.fields?.shortDescription;
+      titleAnchor.setAttribute('href', `/notes/${note?.fields?.slug}`);
+      titleAnchor.appendChild(title);
+      preview.appendChild(titleAnchor);
+      preview.appendChild(description);
+      this._previews.appendChild(preview);
+    });
   }
 }
 

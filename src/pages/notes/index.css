@@ -2,10 +2,10 @@ page-notes {
   display: block;
   margin: 0 auto;
   padding: 0 1em;
-  max-width: 440px;
+  max-width: 550px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 350px) {
   page-notes {
     padding: 0 0.5em;
   }
@@ -21,9 +21,29 @@ page-notes {
   flex: 1 0 auto;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 0.5em 0;
 }
 
-.notes-filters-description {
-  text-align: center;
-  margin-bottom: 0;
+.notes-preview-item {
+  margin: 2em 0;
+}
+
+.notes-preview-item-title-anchor {
+  border-bottom: none;
+}
+
+.notes-preview-item-title {
+  display: inline;
+  margin: 0;
+  padding-bottom: 0.1em;
+  border-bottom: 1px dotted transparent;
+}
+
+.notes-preview-item-title:hover {
+  padding-bottom: 0.1em;
+  border-bottom: 1px dotted mediumvioletred;
+}
+
+.notes-preview-item-description {
+  margin: 0.5em 0;
 }
