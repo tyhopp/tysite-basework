@@ -1,7 +1,14 @@
 page-index {
   display: block;
   margin: 0 auto;
+  padding: 0 1em;
   max-width: 440px;
+}
+
+@media (max-width: 400px) {
+  page-index {
+    padding: 0 0.5em;
+  }
 }
 
 .index-title {
@@ -30,6 +37,10 @@ page-index {
   40% { transform: rotate(9.0deg) }
   50% { transform: rotate(0.0deg) }
   100% { transform: rotate(0.0deg) }
+}
+
+.index-cards {
+  margin: 1.5em 0;
 }
 
 .index-cards .ty-card-button {
