@@ -36,11 +36,6 @@ page-notes {
   display: inline;
   margin: 0;
   padding-bottom: 0.1em;
-  border-bottom: 1px dotted transparent;
-}
-
-.notes-preview-item-title:hover {
-  padding-bottom: 0.1em;
   border-bottom: 1px dotted mediumvioletred;
 }
 

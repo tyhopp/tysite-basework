@@ -83,7 +83,7 @@ h3 {
 a {
   text-decoration: none;
   padding-bottom: 0.1em;
-  border-bottom: 1px dotted var(--text);
+  border-bottom: 1px dotted mediumvioletred;
 }
 
 a:link,
@@ -179,4 +179,8 @@ blockquote {
 
 blockquote p {
   padding: 0 1em;
+}
+
+.hidden {
+  display: none;
 }

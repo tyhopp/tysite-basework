@@ -18,7 +18,9 @@ class TyCheckbox extends HTMLElement {
     const attribute = category.toLowerCase();
     this._input.setAttribute('id', attribute);
     this._input.setAttribute('name', attribute);
+    this._input.setAttribute('value', category);
     this._label.setAttribute('for', attribute);
+    this.setAttribute('category', category);
     this._text.textContent = category;
   }
 }

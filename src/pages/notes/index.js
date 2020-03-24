@@ -3,14 +3,23 @@ import './index.css';
 const importCheckbox = import(/* webpackChunkName: "ty-checkbox" */'components/ty-checkbox/ty-checkbox.js');
 
 class Notes extends HTMLElement {
+  constructor() {
+    super();
+    this._onFilterSelect = this._onFilterSelect.bind(this);
+  }
 
   connectedCallback() {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
       this._filters = this.querySelector('.notes-filters');
       this._previews = this.querySelector('.notes-previews');
+      this._setListeners(true);
       this._initialized = true;
     }
+  }
+
+  disconnectedCallback() {
+    this._setListeners(false);
   }
 
   // TODO - Refactor to use services
@@ -41,19 +50,27 @@ class Notes extends HTMLElement {
 
   setData(data) {
     const notes = data?.data?.items || [];
-    this._setFilters(notes)
-    this._setNotes(notes);
+    this._renderFilters(notes);
+    this._renderNotes(notes);
   }
 
-  _setFilters(notes) {
+  _setListeners(flag) {
+    const fnName = flag ? 'addEventListener' : 'removeEventListener';
+    this._filters[fnName]('change', this._onFilterSelect);
+  }
+
+  _renderFilters(notes) {
     const categories = notes
       .map(note => note?.fields?.category)
       .flat()
       .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
 
+    this._categories = categories;
+
     if (!categories.length) {
       return;
     }
+
     importCheckbox
       .then(() => {
         categories.forEach(category => {
@@ -64,7 +81,7 @@ class Notes extends HTMLElement {
       });
   }
 
-  _setNotes(notes) {
+  _renderNotes(notes) {
     notes.forEach(note => {
       // TODO - Refactor to use document fragment
       const preview = document.createElement('article');
@@ -81,8 +98,29 @@ class Notes extends HTMLElement {
       titleAnchor.appendChild(title);
       preview.appendChild(titleAnchor);
       preview.appendChild(description);
+      preview.dataset.categories = note?.fields?.category;
       this._previews.appendChild(preview);
     });
+  }
+
+  _filterNotes() {
+    Array.from(this._previews.children).forEach(note => {
+      const noteHasActiveCategory = note.dataset.categories.split(',').some(noteCategory => this._categories.includes(noteCategory));
+      const fnName = noteHasActiveCategory ? 'remove' : 'add';
+      note.classList[fnName]('hidden');
+    });
+  }
+
+  _onFilterSelect(e) {
+    const category = e.target.value;
+    const checked = e.target.checked;
+    if (checked && !this._categories.includes(category)) {
+      this._categories.push(category);
+    }
+    if (!checked && this._categories.includes(category)) {
+      this._categories = this._categories.filter(filterCategory => filterCategory !== category);
+    }
+    this._filterNotes();
   }
 }
 
