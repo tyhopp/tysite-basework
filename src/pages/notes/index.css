@@ -13,4 +13,17 @@ page-notes {
 
 .notes-title {
   text-align: center;
+  margin: 0;
+}
+
+.notes-filters {
+  display: flex;
+  flex: 1 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.notes-filters-description {
+  text-align: center;
+  margin-bottom: 0;
 }

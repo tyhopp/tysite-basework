@@ -1,11 +1,13 @@
 import template from './index.html';
-import './index.css'; 
+import './index.css';
+const importCheckbox = import(/* webpackChunkName: "ty-checkbox" */'components/ty-checkbox/ty-checkbox.js');
 
 class Notes extends HTMLElement {
 
   connectedCallback() {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
+      this._filters = this.querySelector('.notes-filters');
       this._initialized = true;
     }
   }
@@ -46,7 +48,18 @@ class Notes extends HTMLElement {
       .map(note => note.fields.category)
       .flat()
       .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
-    // TODO - Set radio buttons for each category
+
+    if (!categories.length) {
+      return;
+    }
+    importCheckbox
+      .then(() => {
+        categories.forEach(category => {
+          const checkbox = document.createElement('ty-checkbox');
+          this._filters.appendChild(checkbox);
+          checkbox.setData(category);
+        });
+      });
   }
 
   _setNotes() {

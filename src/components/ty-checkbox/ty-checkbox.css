@@ -1,0 +1,11 @@
+ty-checkbox {
+  display: block;
+  margin: 0.5em 0.5em 0;
+}
+
+.ty-checkbox-label {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

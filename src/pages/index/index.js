@@ -1,6 +1,5 @@
 import template from './index.html';
 import './index.css';
-// TODO - Find a more elegant way to do this
 const importCard = import(/* webpackChunkName: "ty-card" */'components/ty-card/ty-card.js');
 
 class Index extends HTMLElement {
@@ -47,11 +46,11 @@ class Index extends HTMLElement {
   }
 
   _setCards(portfolioItems, assets) {
-    portfolioItems.forEach(portfolioItem => {
-      const data = portfolioItem?.fields;
-      data.logo = this._getAsset(assets, data?.logo?.sys?.id);
-      data.darkLogo = this._getAsset(assets, data?.darkLogo?.sys?.id)
-      importCard.then(() => {
+    importCard.then(() => {
+      portfolioItems.forEach(portfolioItem => {
+        const data = portfolioItem?.fields;
+        data.logo = this._getAsset(assets, data?.logo?.sys?.id);
+        data.darkLogo = this._getAsset(assets, data?.darkLogo?.sys?.id)
         const card = document.createElement('ty-card');
         this._cardsContainer.appendChild(card);
         card.setData(data);
