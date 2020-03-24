@@ -39,6 +39,7 @@ Loads only what you need when you need it:
   - [x] Refactor async in prefetch and transform step
   - [ ] Migrate remaining React components to web components
   - [ ] Fix kinks in webpack-dev-server
+  - [ ] Fix flicker on navigate
   - [ ] Webpack config differentiated by environment
   - [ ] Prefetch/preload links
 
