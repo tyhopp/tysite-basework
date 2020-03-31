@@ -13,4 +13,6 @@ const runWebpack = config => {
   });
 }
 
-module.exports = runWebpack;
+module.exports = {
+  runWebpack
+}

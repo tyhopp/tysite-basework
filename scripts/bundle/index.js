@@ -1,11 +1,11 @@
-const createConfig = require('../../webpack.config.js');
-const runWebpack = require('./run-webpack');
+const { createConfig } = require('../../webpack.config.js');
+const { runWebpack } = require('./run-webpack');
 
 /**
  * Runs webpack to bundle all assets.
  */
-const bundle = async routes => {
-  const config = await createConfig(routes);
+const bundle = async () => {
+  const config = await createConfig();
 
   if (!config) {
     console.error('No webpack config found');
@@ -18,4 +18,6 @@ const bundle = async routes => {
 // TODO - Improve error handling output
 // TODO - Explore if stats is useful for anything
 
-module.exports = bundle;
+module.exports = {
+  bundle
+}

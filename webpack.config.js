@@ -1,32 +1,13 @@
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
-
-/**
- * Helper function to create pages from routes.
- */
-const createPages = routes => {
-  return Object.values(routes).map(page => {
-    return new HtmlWebpackPlugin({
-      template: './src/base.html',
-      filename: `${page}.html`,
-      chunks: ['base', page]
-    });
-  });
-}
 
 /**
  * Main function to generate webpack config.
  */
-const createConfig = async routes => {
-  if (!routes) { // TODO - Pass in env and only get routes again if dev
-    const prepare = require('./scripts/prepare');
-    routes = await prepare();
-  }
-
+const createConfig = async () => {
   return {
-    mode: 'development',
+    mode: 'development', // TODO - Create different builds for different modes
     entry: {
       base: './src/base.js'
     },
@@ -42,9 +23,8 @@ const createConfig = async routes => {
       publicPath: '/' // Where to serve assets
     },
     plugins: [
-      ...createPages(routes),
-      new MiniCssExtractPlugin(),
-      // new CleanWebpackPlugin()
+      new CleanWebpackPlugin(),
+      new MiniCssExtractPlugin()
     ],
     resolve: {
       alias: {
@@ -114,4 +94,6 @@ const createConfig = async routes => {
   }
 }
 
-module.exports = createConfig;
+module.exports = {
+  createConfig
+}

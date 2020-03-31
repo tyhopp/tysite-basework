@@ -27,8 +27,16 @@ const fs = require('fs');
     return routes;
   }
 
-  const createRouteFile = routes => {
-    const routesFile = `const routes = ${JSON.stringify(routes)};\n\nmodule.exports = routes;`;
+  const createRouteFile = (pages, routes) => {
+    const routesFile = `
+      const routes = ${JSON.stringify(routes)};
+      const pages = ${JSON.stringify(pages)};
+
+      module.exports = {
+        pages,
+        routes
+      }
+    `;
 
     return new Promise((resolve, reject) => {
         fs.writeFile(path.resolve('src', 'routes.js'), routesFile, error => {
@@ -43,10 +51,12 @@ const fs = require('fs');
   const createRoutes = async () => {
     let pages = await getPages();
     let routes = await createRouteObject(pages);
-    await createRouteFile(routes);
+    await createRouteFile(pages, routes);
     
     console.log('Routes created');
     return routes;
   }
 
-module.exports = createRoutes;
+module.exports = {
+  createRoutes
+}

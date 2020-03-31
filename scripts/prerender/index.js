@@ -1,26 +1,26 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const { pages } = require('../../src/routes');
 
 /**
  * Runs Puppeteer to prerender all pages so that:
  *  - The site is usable with JavaScript disabled
  *  - Loading times are as fast as possible
  */
-const prerender = async routes => {
-  for (const route in routes) {
-    const file = routes[route];
+const prerender = async () => {
+  for (const page of pages) {
     const browser = await puppeteer.launch({
       headless: true,
       args: ['--disable-web-security']
     });
-    const page = await browser.newPage();
+    const browserPage = await browser.newPage();
 
     // Enable request interception
-    await page.setRequestInterception(true);
+    await browserPage.setRequestInterception(true);
 
     // Set correct url paths for local files
-    page.on('request', request => {
+    browserPage.on('request', request => {
       if (!request.url().startsWith('file:///')) { // Local file scheme
         request.continue();
         return;
@@ -49,7 +49,7 @@ const prerender = async routes => {
     // });
 
     // Output console logs
-    page.on('console', async msg => {
+    browserPage.on('console', async msg => {
       const args = await msg.args();
       args.forEach(async arg => {
         const value = await arg.jsonValue();
@@ -64,17 +64,19 @@ const prerender = async routes => {
       });
     });
     
-    await page.goto(`file:${path.resolve('dist', `${file}.html?prerender=${file}`)}`, { waitUntil: 'networkidle0' });
-    const html = await page.content();
+    await browserPage.goto(`file:${path.resolve('dist', `${page}.html?prerender=${page}`)}`, { waitUntil: 'networkidle0' });
+    const html = await browserPage.content();
     await browser.close();
 
-    fs.writeFile(`${path.resolve('dist', `${file}.html`)}`, html, error => {
+    fs.writeFile(`${path.resolve('dist', `${page}.html`)}`, html, error => {
       if (error) throw error;
-      console.log(`Prerendered ${file}`);
+      console.log(`Prerendered ${page}`);
     });
   }
 
   return;
 }
 
-module.exports = prerender;
+module.exports = {
+  prerender
+}

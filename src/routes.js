@@ -1,3 +1,9 @@
-const routes = {"/":"index","/notes":"notes"};
 
-module.exports = routes;
+      const routes = {"/":"index","/notes":"notes"};
+      const pages = ["index","notes"];
+
+      module.exports = {
+        pages,
+        routes
+      }
+    

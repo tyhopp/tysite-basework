@@ -1,4 +1,4 @@
-const createRoutes = require('./create-routes');
+const { createRoutes } = require('./create-routes');
 
 /**
  * Does all the necessary preparation required to bundle the site.
@@ -8,4 +8,6 @@ const prepare = async () => {
   return routes;
 }
 
-module.exports = prepare;
+module.exports = {
+  prepare
+}

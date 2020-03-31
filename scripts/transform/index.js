@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const { pages } = require('../../src/routes');
 const { markdownToHtml } = require('./markdown-to-html');
 
 const getPageData = page => {
@@ -74,14 +75,14 @@ const createDataFile = (page, final) => {
   })
 }
 
-const transform = async routes => {
-  const pages = Object.values(routes);
-  for (let i = 0; i < pages.length; i++) {
-    const page = pages[i];
+const transform = async () => {
+  for (const page of pages) {
     const buffer = await getPageData(page);
     const final = await performTransformations(buffer);
     await createDataFile(page, final);
   };
 }
 
-module.exports = transform;
+module.exports = {
+  transform
+}

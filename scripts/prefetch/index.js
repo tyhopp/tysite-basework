@@ -3,6 +3,7 @@ const fs = require('fs');
 const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 const generate = require('@babel/generator').default;
+const { pages } = require('../../src/routes');
 
 const getPageJavaScript = page => {
   return new Promise((resolve, reject) => {
@@ -61,14 +62,14 @@ const createDataFile = page => {
   });
 }
 
-const prefetch = async routes => {
-  const pages = Object.values(routes);
-  for (let i = 0; i < pages.length; i++) {
-    const page = pages[i];
+const prefetch = async () => {
+  for (const page of pages) {
     const buffer = await getPageJavaScript(page);
     await parsePrefetchMethod(page, buffer);
     await createDataFile(page);
   };
 }
 
-module.exports = prefetch;
+module.exports = {
+  prefetch
+}
