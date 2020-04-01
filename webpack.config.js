@@ -11,7 +11,7 @@ const createConfig = async () => {
     entry: {
       base: './src/base.js'
     },
-    output: {
+    output: { 
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'), // Where to find assets
@@ -94,6 +94,4 @@ const createConfig = async () => {
   }
 }
 
-module.exports = {
-  createConfig
-}
+module.exports = createConfig;

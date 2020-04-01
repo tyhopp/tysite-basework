@@ -1,14 +1,14 @@
 const unified = require('unified');
-const markdown = require('remark-parse');
-const remark2rehype = require('remark-rehype')
-const html = require('rehype-stringify');
+const parse = require('remark-parse');
+const transform = require('remark-rehype')
+const stringify = require('rehype-stringify');
 
 // TODO - Fix async
 function markdownToHtml(rawMarkdown) {
   return unified()
-    .use(markdown)
-    .use(remark2rehype)
-    .use(html)
+    .use(parse)
+    .use(transform)
+    .use(stringify)
     .processSync(rawMarkdown).contents;
 }
 

@@ -42,6 +42,7 @@ Loads only what you need when you need it:
   - [ ] Fix flicker on navigate
   - [ ] Webpack config differentiated by environment
   - [ ] Prefetch/preload links
+  - [ ] Find a solution for dependencies with vulnerabilities
 
 ## Look into
   - Extraction into a generalized project

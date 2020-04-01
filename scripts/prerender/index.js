@@ -70,7 +70,7 @@ const prerender = async () => {
 
     fs.writeFile(`${path.resolve('dist', `${page}.html`)}`, html, error => {
       if (error) throw error;
-      console.log(`Prerendered ${page}`);
+      console.log(`Prerendered ${page} page`);
     });
   }
 

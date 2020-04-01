@@ -1,4 +1,4 @@
-const { createConfig } = require('../../webpack.config.js');
+const createConfig = require('../../webpack.config.js');
 const { runWebpack } = require('./run-webpack');
 
 /**

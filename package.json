@@ -25,12 +25,15 @@
     "mini-css-extract-plugin": "^0.9.0",
     "node-fetch": "^2.6.0",
     "puppeteer": "^2.1.1",
+    "rehype-parse": "^6.0.2",
     "rehype-stringify": "^6.0.1",
     "remark-parse": "^7.0.2",
     "remark-rehype": "^5.0.0",
     "unified": "^8.4.2",
+    "unist-util-visit": "^2.0.2",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
-  }
+  },
+  "dependencies": {}
 }
