@@ -9,8 +9,9 @@ const addImports = ({ assets }) => tree => {
         type: 'element',
         tagName: 'script',
         properties: {
+          async: true,
           src: `/${asset}`,
-          async: true
+          type: 'text/javascript'
         },
         children: {},
         position: {}
@@ -21,7 +22,8 @@ const addImports = ({ assets }) => tree => {
         tagName: 'link',
         properties: {
           href: `./${asset}`,
-          rel: 'preload'
+          rel: 'preload',
+          as: 'style'
         },
         children: {},
         position: {}
