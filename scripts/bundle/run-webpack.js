@@ -9,7 +9,7 @@ const runWebpack = config => {
         reject(error);
       }
       
-      console.log('Assets bundled');
+      console.log('Bundled assets');
 
       const statsObject = JSON.stringify(stats.toJson({ all: false, chunkGroups: true }));
       const statsFile = `
@@ -19,7 +19,7 @@ const runWebpack = config => {
           stats
         }
       `;
-      fs.writeFileSync(path.resolve(__dirname, 'webpack.stats.js'), statsFile);
+      fs.writeFileSync(path.resolve('dist/webpack.stats.js'), statsFile);
       resolve(stats);
     });
   });

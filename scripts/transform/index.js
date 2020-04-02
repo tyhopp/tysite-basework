@@ -5,12 +5,16 @@ const { markdownToHtml } = require('./markdown-to-html');
 
 const getPageData = page => {
   return new Promise((resolve, reject) => {
-    fs.readFile(path.resolve(`dist/${page}-data.json`), (error, json) => {
-      if (error) {
-        reject(error)
-      }
-      resolve(json);
-    });
+    try {
+      fs.readFile(path.resolve(`dist/${page}-data.json`), (error, json) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(json);
+      });
+    } catch (error) {
+      resolve(); // Do nothing, there is no page data
+    }
   });
 }
 
@@ -65,13 +69,17 @@ const performTransformations = buffer => {
 
 const createDataFile = (page, final) => {
   return new Promise((resolve, reject) => {
-    fs.writeFile(path.resolve(`dist/${page}-data.json`), final, error => {
-      if (error) {
-        reject(error)
-      }
-      console.log(`Transformed ${page} data`);
-      resolve();
-    });
+    try {
+      fs.writeFile(path.resolve(`dist/${page}-data.json`), final, error => {
+        if (error) {
+          reject(error)
+        }
+        console.log(`Transformed ${page} data`);
+        resolve();
+      });
+    } catch (error) {
+      resolve(); // Do nothing, no data to create
+    }
   })
 }
 

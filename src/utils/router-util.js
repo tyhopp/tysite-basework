@@ -9,7 +9,7 @@ import routes from '../routes.js';
     const prerenderRoute = params.get('prerender');
     const route = prerenderRoute
       ? prerenderRoute
-      : routes[path] ? routes[path] : '404';
+      : routes[path] ? routes[path] : 'not-found';
 
     // Remove old template
     if (main.children.length) {

@@ -44,8 +44,23 @@ const parsePrefetchMethod = async (page, buffer) => {
     }
   });
 
+  // Ensure fetch file exists
+  const ensureExistance = async () => {
+    const targetPath = `${path.resolve('dist')}/${page}-prefetch.js`;
+    if (!fs.existsSync(targetPath)) {
+      const requireStatement = `const fetch = require('node-fetch');`;
+      const fnName = page.replace(/[-_]/, '');
+      const assignBlock = `const ${fnName}Prefetch = () => `;
+      const exportStatement = `module.exports = ${fnName}Prefetch;`;
+      const code = `Promise.resolve({});`;
+      const final = `${requireStatement}\n\n${assignBlock}${code}\n\n${exportStatement}`;
+      fs.writeFileSync(targetPath, final);
+    }
+  }
+
   const ast = await createAst();
   await traverseTree(ast);
+  await ensureExistance();
 }
 
 const createDataFile = page => {

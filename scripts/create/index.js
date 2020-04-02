@@ -1,5 +1,4 @@
 const { pages } = require('../../src/routes');
-const { stats } = require('../bundle/webpack.stats.js');
 const { createPage } = require('./create-page');
 const fs = require('fs');
 const path = require('path');
@@ -29,7 +28,7 @@ const createFile = (page, html) => {
 
 const createPages = async () => {
   for (const page of pages) {
-    const groups = stats.namedChunkGroups;
+    const groups = require('../../dist/webpack.stats.js').stats.namedChunkGroups;
     if (!groups[page]) {
       console.error(`No webpack stats found for ${page}`);
     }
