@@ -40,7 +40,7 @@ import { routes } from '../routes.js';
           });
         }
         
-        fetchPageData(`/${route}-data.json`)
+        fetchPageData(`${route}-data.json`)
           .then(data => {
             try {
               const json = JSON.parse(data);

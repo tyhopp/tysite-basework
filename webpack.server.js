@@ -1,6 +1,7 @@
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
+const dotenv = require('dotenv');
 const path = require('path');
 const fs = require('fs');
 
@@ -12,19 +13,19 @@ const { transform } = require('./scripts/transform');
 const { createPages } = require('./scripts/create');
 const { extractStats } = require('./scripts/bundle/extract-stats');
 
-const getFile = url => {
+const getFile = file => {
   return new Promise((resolve, reject) => {
-    const { routes } = require('./src/routes');
-    fs.readFile(path.resolve(`dist/${routes[url]}.html`), (error, html) => {
-      if (error || !html) {
+    fs.readFile(path.resolve(`dist${file}`), (error, buffer) => {
+      if (error || !buffer) {
         reject(error)
       }
-      resolve(html.toString());
+      resolve(buffer.toString());
     });
   });
 }
 
 const getHtml = async (url, response) => {
+  dotenv.config();
   await prepare();
   await prefetch();
   await transform();
@@ -47,8 +48,15 @@ const serve = async () => {
   app.use((request, response) => {
     const { routes } = require('./src/routes');
     const { url } = request;
+
+    if (url.includes('json')) {
+      getFile(url).then(file => {
+        response.send(file);
+      });
+    }
+
     if (routes[url]) {
-      getHtml(url, response).then(html => {
+      getHtml(`/${routes[url]}.html`, response).then(html => {
         response.send(html);
       });
     }
