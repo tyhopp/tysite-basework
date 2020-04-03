@@ -1,5 +1,4 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 /**
@@ -17,13 +16,8 @@ const createConfig = async () => {
       path: path.resolve(__dirname, 'dist'), // Where to find assets
       publicPath: '/' // Where to serve assets
     },
-    devtool: 'inline-source-map', // Should be used for dev only
-    devServer: {
-      contentBase: path.resolve(__dirname, 'dist'), // Where to find assets
-      publicPath: '/' // Where to serve assets
-    },
+    devtool: 'inline-source-map', // Should be used for dev only,
     plugins: [
-      new CleanWebpackPlugin(),
       new MiniCssExtractPlugin()
     ],
     resolve: {

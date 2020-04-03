@@ -28,11 +28,11 @@ const createFile = (page, html) => {
 
 const createPages = async () => {
   for (const page of pages) {
-    const groups = require('../../dist/webpack.stats.js').stats.namedChunkGroups;
+    const groups = require('../../dist/webpack.stats.js').stats;
     if (!groups[page]) {
       console.error(`No webpack stats found for ${page}`);
     }
-    const assets = groups[page].assets;
+    const assets = groups[page];
     const template = await getTemplate('base.html');
     const html = await createPage(template, assets);
     await createFile(page, html);

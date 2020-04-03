@@ -12,20 +12,32 @@ const addImports = ({ assets }) => tree => {
         tagName: 'script',
         properties: {
           async: true,
-          src: `/${asset}`,
+          src: `${asset}`,
           type: 'text/javascript'
         },
         children: {},
         position: {}
       });
 
-      const createLinkTag = asset => ({
+      const createLinkPreloadTag = asset => ({
         type: 'element',
         tagName: 'link',
         properties: {
-          href: `./${asset}`,
           rel: 'preload',
+          href: `${asset}`,
           as: 'style'
+        },
+        children: {},
+        position: {}
+      });
+
+      const createLinkStyleTag = asset => ({
+        type: 'element',
+        tagName: 'link',
+        properties: {
+          rel: 'stylesheet',
+          href: `${asset}`,
+          type: 'text/css'
         },
         children: {},
         position: {}
@@ -41,7 +53,8 @@ const addImports = ({ assets }) => tree => {
               break;
             case 'css':
               if (node.tagName === 'head') {
-                node.children.push(createLinkTag(asset));
+                node.children.push(createLinkPreloadTag(asset));
+                node.children.push(createLinkStyleTag(asset));
               }
               break;
           }

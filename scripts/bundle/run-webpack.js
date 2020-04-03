@@ -1,6 +1,5 @@
 const webpack = require('webpack');
-const fs = require('fs');
-const path = require('path');
+const { extractStats } = require('./extract-stats');
 
 const runWebpack = config => {
   return new Promise((resolve, reject) => {
@@ -8,18 +7,10 @@ const runWebpack = config => {
       if (error) {
         reject(error);
       }
-      
       console.log('Bundled assets');
-
-      const statsObject = JSON.stringify(stats.toJson({ all: false, chunkGroups: true }));
-      const statsFile = `
-        const stats = ${statsObject}
-
-        module.exports = {
-          stats
-        }
-      `;
-      fs.writeFileSync(path.resolve('dist/webpack.stats.js'), statsFile);
+      
+      extractStats(stats.compilation);
+      console.log('Created stats');
       resolve(stats);
     });
   });
