@@ -38,11 +38,12 @@ Loads only what you need when you need it:
   - [x] Create markdown parser build step with [unified](https://unifiedjs.com)
   - [x] Refactor async in prefetch and transform step
   - [ ] Migrate remaining React components to web components
-  - [ ] Fix kinks in webpack-dev-server
+  - [x] Rewrite dev server with webpack-dev-middleware and express
   - [ ] Fix flicker on navigate
   - [ ] Webpack config differentiated by environment
   - [ ] Prefetch/preload links
   - [ ] Find a solution for dependencies with vulnerabilities
+  - [ ] Add favicon and open graph meta tags to base
 
 ## Look into
   - Extraction into a generalized project

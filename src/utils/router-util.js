@@ -1,4 +1,6 @@
 import { routes } from '../routes.js';
+import { xhr } from './xhr-util';
+import { prefetchNextPageData } from './prefetch-util';
 
 (() => {
   const navigate = path => {
@@ -23,24 +25,8 @@ import { routes } from '../routes.js';
         main.appendChild(page);
         
         // TODO - Create caching mechanism, or decide to leave caching to browser
-
-        const fetchPageData = url => {
-          return new Promise((resolve, reject) => {
-            const request = new XMLHttpRequest;
-            request.open('GET', url, true);
-            request.onreadystatechange = () => {
-              if (request.readyState == 4) {
-                resolve(request.responseText);
-              }
-            }
-            request.onerror = error => {
-              reject(error);
-            }
-            request.send(null);
-          });
-        }
         
-        fetchPageData(`${route}-data.json`)
+        xhr(`${route}-data.json`)
           .then(data => {
             try {
               const json = JSON.parse(data);
@@ -49,6 +35,12 @@ import { routes } from '../routes.js';
               }
             } catch (error) {
               console.error('Failed to parse page data', error);
+            }
+
+            try {
+              prefetchNextPageData(page);
+            } catch (error) {
+              console.warn('Failed to prefetch next page data', error);
             }
           })
           .catch(error => {
