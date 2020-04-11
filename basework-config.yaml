@@ -1,0 +1,3 @@
+bundler: webpack|parcel|rollup
+prefetch: true
+prerender: true

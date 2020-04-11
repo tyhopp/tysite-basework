@@ -22,9 +22,6 @@ function prefetchNextPageData(currentPage) {
   const paths = new Set(anchors.map(anchor => getUrlParts(anchor.href).pathname.replace(/\//, '')));
   const requests = Array.from(paths).map(path => xhr(`${path}-data.json`));
   Promise.all(requests)
-    .then(() => {
-      console.log('Successfully prefetched page data');
-    })
     .catch(error => {
       console.warn(`Failed to prefetch page data`, error);
     });
