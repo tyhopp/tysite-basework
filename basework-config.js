@@ -1,5 +1,14 @@
-module.exports = {
+const baseworkConfig = () => ({
   bundler: 'webpack',
-  prefetch: true,
-  prerender: true
-};
+  build: [
+    'prepare',
+    'prefetch',
+    'transform',
+    'bundle',
+    'create',
+    'createSubPages',
+    'prerender'
+  ]
+});
+
+module.exports = baseworkConfig;
