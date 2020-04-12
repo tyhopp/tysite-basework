@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "basework start"
+    "start": "basework start",
+    "build": "basework build"
   },
   "keywords": [],
   "author": "",
