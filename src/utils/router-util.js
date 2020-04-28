@@ -1,52 +1,80 @@
-import { routes } from '../routes.js';
 import { xhr } from './xhr-util';
 import { prefetchNextPageData } from './prefetch-util';
 
 (() => {
-  const navigate = path => {
+  const removePages = () => {
     const main = document.querySelector('main');
-
-    // Check if is prerendering
-    const params = new URLSearchParams(window.location.search);
-    const prerenderRoute = params.get('prerender');
-    const route = prerenderRoute
-      ? prerenderRoute
-      : routes[path] ? routes[path] : 'not-found';
-
-    // Remove old template
     if (main.children.length) {
       Array.from(main.children).forEach(child => child.remove());
     }
+  }
+
+  const createPage = page => {
+    const main = document.querySelector('main');
+    const pageElem = document.createElement(`page-${page}`);
+    main.appendChild(pageElem);
+    return pageElem
+  }
+
+  const setPageData = (page, data) => {
+    try {
+      const json = JSON.parse(data);
+      if (page.setData && typeof page.setData === 'function') {
+        page.setData(json);
+      }
+    } catch (error) {
+      console.error('Failed to parse page data', error);
+    }
+  }
+
+  const prerenderNextPages = (page, shouldPrerender) => {
+    if (shouldPrerender) {
+      try {
+        prefetchNextPageData(page);
+      } catch (error) {
+        console.warn('Failed to prefetch next page data', error);
+      }
+    }
+  }
+
+  const navigate = path => {
+
+    // Start route resolution
+    let route = path;
+
+    // Check if is prerendering
+    const params = new URLSearchParams(window.location.search);
+    const isPrerendering = !!params.get('prerender');
+    const prerenderRoute = params.get('prerender');
+    if (prerenderRoute) {
+      route = prerenderRoute;
+    }
+
+    // Remove old template
+    removePages();
+
+    // Check if is sub route
+    const routeParts = route.split('/');
+    if (routeParts.length > 1) {
+      const note = 'note'
+      const pageName = routeParts[routeParts.length - 1];
+      import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../sub-pages/${note}`).then(() => {
+        const page = createPage(note);
+        xhr(`${pageName}-data.json`).then(data => {
+          setPageData(page, data);
+        });
+      });
+      return;
+    }
 
     // Fetch bundle and render template
-    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${route}`)
-      .then(() => {
-        const page = document.createElement(`page-${route}`);
-        main.appendChild(page);
-        
-        // TODO - Create caching mechanism, or decide to leave caching to browser
-        
-        xhr(`${route}-data.json`)
-          .then(data => {
-            try {
-              const json = JSON.parse(data);
-              if (page.setData && typeof page.setData === 'function') {
-                page.setData(json);
-              }
-            } catch (error) {
-              console.error('Failed to parse page data', error);
-            }
-
-            try {
-              prefetchNextPageData(page);
-            } catch (error) {
-              console.warn('Failed to prefetch next page data', error);
-            }
-          })
-          .catch(error => {
-            console.error('Failed to fetch page data', error);
-          });
+    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${route}`).then(() => {
+      const page = createPage(route);
+      xhr(`${route}-data.json`).then(data => {
+        setPageData(page, data);
+        prerenderNextPages(page, !isPrerendering);
       });
+    });
   }
 
   navigate(window.location.pathname);
