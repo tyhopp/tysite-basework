@@ -1,5 +1,6 @@
 const { getSubPageData } = require('./get-sub-page-data');
 const { updateBaseworkIndex } = require('./update-basework-index');
+const { ensurePathExists } = require('./ensure-path-exists');
 const { prefetch } = require('basework/prefetch');
 const { transform } = require('basework/transform');
 const { create } = require('basework/create');
@@ -13,14 +14,18 @@ const createSubPages = async () => {
   }, {});
   await updateBaseworkIndex(Object.keys(pages));
   for (const page in pages) {
-    await prefetch({ page: `notes/${page}`, data: {
-      data: pages[page],
-      transformations: {
-        'markdown-to-html': ['data.body']
+    await ensurePathExists(`notes/${page}`);
+    await prefetch({
+      page: `notes/${page}`,
+      data: {
+        data: pages[page],
+        transformations: {
+          'markdown-to-html': ['data.body']
+        }
       }
-    }});
+    });
     await transform({ page: `notes/${page}` });
-    await create({ page: `notes/${page}` });
+    await create({ page: `notes/${page}`, assetIndex: 'note' });
     await prerender({ page: `notes/${page}` });
   }
 }

@@ -13,14 +13,14 @@ import { prefetchNextPageData } from './prefetch-util';
     const main = document.querySelector('main');
     const pageElem = document.createElement(`page-${page}`);
     main.appendChild(pageElem);
-    return pageElem
+    return pageElem;
   }
 
-  const setPageData = (page, data) => {
+  const setPageData = (pageElem, data) => {
     try {
       const json = JSON.parse(data);
-      if (page.setData && typeof page.setData === 'function') {
-        page.setData(json);
+      if (pageElem.setData && typeof pageElem.setData === 'function') {
+        pageElem.setData(json);
       }
     } catch (error) {
       console.error('Failed to parse page data', error);
@@ -39,40 +39,40 @@ import { prefetchNextPageData } from './prefetch-util';
 
   const navigate = path => {
 
-    // Start route resolution
-    let route = path;
+    // Start page resolution
+    let page = path === '/' ? 'index' : path.substr(1);
 
     // Check if is prerendering
     const params = new URLSearchParams(window.location.search);
     const isPrerendering = !!params.get('prerender');
     const prerenderRoute = params.get('prerender');
     if (prerenderRoute) {
-      route = prerenderRoute;
+      page = prerenderRoute;
     }
 
     // Remove old template
     removePages();
 
     // Check if is sub route
-    const routeParts = route.split('/');
+    const routeParts = page.split('/');
     if (routeParts.length > 1) {
       const note = 'note'
       const pageName = routeParts[routeParts.length - 1];
       import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../sub-pages/${note}`).then(() => {
-        const page = createPage(note);
+        const pageElem = createPage(note);
         xhr(`${pageName}-data.json`).then(data => {
-          setPageData(page, data);
+          setPageData(pageElem, data);
         });
       });
       return;
     }
 
     // Fetch bundle and render template
-    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${route}`).then(() => {
-      const page = createPage(route);
-      xhr(`${route}-data.json`).then(data => {
-        setPageData(page, data);
-        prerenderNextPages(page, !isPrerendering);
+    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${page}`).then(() => {
+      const pageElem = createPage(page);
+      xhr(`${page}-data.json`).then(data => {
+        setPageData(pageElem, data);
+        prerenderNextPages(pageElem, !isPrerendering);
       });
     });
   }

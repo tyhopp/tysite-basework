@@ -14,10 +14,12 @@ class Note extends HTMLElement {
     }
   }
 
-  setData({ data: { title, slug, date, category, body } }) {
+  setData({ data: { title, date, category: categories, body } }) {
     this._title.textContent = title;
     this._date.setAttribute('datetime', date);
-    this._date.textContent = 
+    this._date.textContent = date;
+    this._categories.textContent = categories.join(', ');
+    this._body.innerHTML = body;
   }
 }
 
