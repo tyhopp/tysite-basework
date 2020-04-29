@@ -6,13 +6,13 @@ class TyTag extends HTMLElement {
   connectedCallback() {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
-      this._tagText = this.querySelector('.ty-tag-text');
       this._initialized = true;
     }
   }
 
   setData(text) {
-    this._tagText.textContent = text;
+    this.setAttribute('value', text);
+    this.textContent = text;
   }
 }
 

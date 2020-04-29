@@ -7,6 +7,7 @@ class Notes extends HTMLElement {
   constructor() {
     super();
     this._onFilterSelect = this._onFilterSelect.bind(this);
+    this._onCategorySelect = this._onCategorySelect.bind(this);
   }
 
   connectedCallback() {
@@ -45,7 +46,7 @@ class Notes extends HTMLElement {
         return { transformations, data }
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -58,6 +59,7 @@ class Notes extends HTMLElement {
   _setListeners(flag) {
     const fnName = flag ? 'addEventListener' : 'removeEventListener';
     this._filters[fnName]('change', this._onFilterSelect);
+    this._previews[fnName]('click', this._onCategorySelect);
   }
 
   _renderFilters(notes) {
@@ -112,9 +114,19 @@ class Notes extends HTMLElement {
 
   _filterNotes() {
     Array.from(this._previews.children).forEach(note => {
-      const noteHasActiveCategory = note.dataset.categories.split(',').some(noteCategory => this._categories.includes(noteCategory));
+      const noteCategories = note.dataset.categories.split(',');
+      const noteHasActiveCategory = noteCategories.some(noteCategory => this._categories.includes(noteCategory));
+      // TODO - Highlight note categories that are active
       const fnName = noteHasActiveCategory ? 'remove' : 'add';
       note.classList[fnName]('hidden');
+    });
+  }
+
+  _updateFilters(category) {
+    Array.from(this._filters.children).forEach(filter => {
+      const input = filter.querySelector('.ty-checkbox-input');
+      input.checked = input.value === category;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
     });
   }
 
@@ -128,6 +140,14 @@ class Notes extends HTMLElement {
       this._categories = this._categories.filter(filterCategory => filterCategory !== category);
     }
     this._filterNotes();
+    window.scrollTo(0, 0);
+  }
+
+  _onCategorySelect(e) {
+    if (e.target.tagName === 'TY-TAG') {
+      this._categories = this._categories.filter(filterCategory => filterCategory !== e.target.textContent);
+      this._updateFilters(e.target.textContent);
+    }
   }
 }
 
