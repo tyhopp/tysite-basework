@@ -56,7 +56,7 @@ import { prefetchNextPageData } from './prefetch-util';
     // Check if is sub route
     const routeParts = page.split('/');
     if (routeParts.length > 1) {
-      const note = 'note'
+      const note = 'note'; // TODO - Generalize this
       const pageName = routeParts[routeParts.length - 1];
       import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../sub-pages/${note}`).then(() => {
         const pageElem = createPage(note);

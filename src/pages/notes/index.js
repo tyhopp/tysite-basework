@@ -1,6 +1,7 @@
 import template from './index.html';
 import './index.css';
 const importCheckbox = import(/* webpackChunkName: "ty-checkbox" */'components/ty-checkbox/ty-checkbox.js');
+const importTag = import(/* webpackChunkName: "ty-tag" */'components/ty-tag/ty-tag.js');
 
 class Notes extends HTMLElement {
   constructor() {
@@ -87,17 +88,23 @@ class Notes extends HTMLElement {
       const preview = document.createElement('article');
       const title = document.createElement('h3');
       const titleAnchor = document.createElement('a');
-      const description = document.createElement('p');
+      const categories = document.createElement('div');
       preview.classList.add('notes-preview-item');
       title.classList.add('notes-preview-item-title');
       titleAnchor.classList.add('notes-preview-item-title-anchor');
-      description.classList.add('notes-preview-item-description');
+      categories.classList.add('notes-preview-item-categories');
       title.textContent = note?.fields?.title;
-      description.textContent = note?.fields?.shortDescription;
       titleAnchor.setAttribute('href', `/notes/${note?.fields?.slug}`);
       titleAnchor.appendChild(title);
       preview.appendChild(titleAnchor);
-      preview.appendChild(description);
+      importTag.then(() => {
+        note?.fields?.category.forEach(category => {
+          const tag = document.createElement('ty-tag');
+          categories.appendChild(tag);
+          tag.setData(category);
+        });
+      });
+      preview.appendChild(categories);
       preview.dataset.categories = note?.fields?.category;
       this._previews.appendChild(preview);
     });

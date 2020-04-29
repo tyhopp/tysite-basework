@@ -9,3 +9,7 @@ ty-checkbox {
   -ms-user-select: none;
   user-select: none;
 }
+
+.ty-checkbox-input:checked {
+  background-color: mediumvioletred;
+}

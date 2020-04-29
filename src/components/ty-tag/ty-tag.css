@@ -1,0 +1,6 @@
+.ty-tag-text {
+  font-size: 13px;
+  padding: 0 1em;
+  margin-right: 1em;
+  border: 1px solid var(--line);
+}
