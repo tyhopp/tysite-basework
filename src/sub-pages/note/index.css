@@ -1,0 +1,33 @@
+page-note {
+  display: block;
+  margin: 0 auto;
+  padding: 0 1em;
+  max-width: 500px;
+}
+
+@media (max-width: 350px) {
+  page-note {
+    padding: 0 0.5em;
+  }
+}
+
+.note-title {
+  font-size: 38px;
+	line-height: 46px;
+  margin: 0;
+}
+
+.note-date {
+  display: block;
+  margin: 0.5em 0;
+}
+
+.note-categories {
+  display: flex;
+  flex: 1 0 auto;
+  margin: 0.5em 0;
+}
+
+.note-category-anchor {
+  width: fit-content;
+}

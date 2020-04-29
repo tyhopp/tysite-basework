@@ -35,7 +35,6 @@ a.ty-header-nav--current {
 	cursor: pointer;
 	background-color: var(--background);
 	border-bottom: none;
-	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .ty-header-nav:last-of-type {
@@ -44,10 +43,12 @@ a.ty-header-nav--current {
 
 .ty-header-nav:hover {
   background-color: var(--primary-tint);
+  border: 1px solid cornflowerblue;
 }
 
 .ty-header-nav:active {
   background-color: var(--secondary-tint);
+  border: 1px solid deepskyblue;
 }
 
 @media (min-width: 700px) {

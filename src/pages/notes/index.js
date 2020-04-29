@@ -54,6 +54,7 @@ class Notes extends HTMLElement {
     const notes = data?.data?.items || [];
     this._renderFilters(notes);
     this._renderNotes(notes);
+    this._checkQueryParams();
   }
 
   _setListeners(flag) {
@@ -103,6 +104,7 @@ class Notes extends HTMLElement {
       importTag.then(() => {
         note?.fields?.category.forEach(category => {
           const tag = document.createElement('ty-tag');
+          tag.setAttribute('active', true);
           categories.appendChild(tag);
           tag.setData(category);
         });
@@ -111,6 +113,14 @@ class Notes extends HTMLElement {
       preview.dataset.categories = note?.fields?.category;
       this._previews.appendChild(preview);
     });
+  }
+
+  _checkQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+    if (category && this._categories.some(validCategory => validCategory === category)) {
+      this._updateFilters(category);
+    }
   }
 
   _filterNotes() {
@@ -131,11 +141,14 @@ class Notes extends HTMLElement {
   }
 
   _updateFilters(category) {
-    Array.from(this._filters.children).forEach(filter => {
-      const input = filter.querySelector('.ty-checkbox-input');
-      input.checked = input.value === category;
-      input.dispatchEvent(new Event('change', { bubbles: true }));
-    });
+    setTimeout(() => { // TODO - Refactor the flow of this
+      Array.from(this._filters.children).forEach(filter => {
+        const input = filter.querySelector('.ty-checkbox-input');
+        console.log(input.value, category)
+        input.checked = input.value === category;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    }, 0);
   }
 
   _onFilterSelect(e) {

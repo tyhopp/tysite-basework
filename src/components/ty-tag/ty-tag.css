@@ -1,18 +1,25 @@
 ty-tag {
   display: block;
   font-size: 13px;
+  width: fit-content;
   padding: 0 1em;
   margin-right: 1em;
   border: 1px solid var(--line);
   cursor: pointer;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 ty-tag:hover {
   background-color: var(--primary-tint);
+  border: 1px solid cornflowerblue;
 }
 
 ty-tag:active {
   background-color: var(--secondary-tint);
+  border: 1px solid deepskyblue;
 }
 
 ty-tag[active=true] {
