@@ -16,5 +16,5 @@ ty-tag:active {
 }
 
 ty-tag[active=true] {
-  border: 1px solid cornflowerblue;
+  background-color: var(--primary-tint);
 }

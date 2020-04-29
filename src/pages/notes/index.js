@@ -85,6 +85,7 @@ class Notes extends HTMLElement {
   }
 
   _renderNotes(notes) {
+    notes.sort((a, b) => new Date(b?.fields?.date) - new Date(a?.fields?.date));
     notes.forEach(note => {
       // TODO - Refactor to use document fragment
       const preview = document.createElement('article');
@@ -116,9 +117,16 @@ class Notes extends HTMLElement {
     Array.from(this._previews.children).forEach(note => {
       const noteCategories = note.dataset.categories.split(',');
       const noteHasActiveCategory = noteCategories.some(noteCategory => this._categories.includes(noteCategory));
-      // TODO - Highlight note categories that are active
+      this._highlightActiveCategories(note);
       const fnName = noteHasActiveCategory ? 'remove' : 'add';
       note.classList[fnName]('hidden');
+    });
+  }
+
+  _highlightActiveCategories(note) {
+    const noteCategories = note.querySelectorAll('ty-tag');
+    noteCategories.forEach(noteCategory => {
+      noteCategory.setAttribute('active', this._categories.includes(noteCategory.getAttribute('value')));
     });
   }
 
