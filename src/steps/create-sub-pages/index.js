@@ -20,7 +20,8 @@ const createSubPages = async () => {
       data: {
         data: pages[page],
         transformations: {
-          'markdown-to-html': ['data.body']
+          'markdown-to-html': ['data.body'],
+          'highlight-syntax': ['data.body']
         }
       }
     });

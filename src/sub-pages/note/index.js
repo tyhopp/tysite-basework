@@ -1,5 +1,6 @@
 import template from './index.html';
 import './index.css';
+import '../../styles/code.css';
 const importTag = import(/* webpackChunkName: "ty-tag" */'components/ty-tag/ty-tag.js');
 
 class Note extends HTMLElement {
