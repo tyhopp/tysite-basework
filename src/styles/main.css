@@ -106,17 +106,6 @@ li {
   list-style: var(--list);
 }
 
-.blog-post {
-  margin: 0 auto;
-  max-width: 330px;
-}
-
-@media (min-width: 700px) {
-  .blog-post {
-    max-width: 550px;
-  }
-}
-
 .ty-button {
   display: block;
   letter-spacing: 0.75px;
@@ -142,13 +131,7 @@ li {
 
 blockquote {
   border-left: 2px solid var(--line);
-  max-width: 300px;
-  margin: 1em auto;
-}
-@media (min-width: 700px) {
-  blockquote {
-    max-width: 460px;
-  }
+  margin: 1em;
 }
 
 blockquote p {
