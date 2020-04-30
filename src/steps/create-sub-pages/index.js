@@ -26,7 +26,17 @@ const createSubPages = async () => {
       }
     });
     await transform({ page: `notes/${page}` });
-    await create({ page: `notes/${page}`, assetIndex: 'note' });
+    await create({
+      page: `notes/${page}`, 
+      template: 'src/templates/note.html',
+      head: {
+        title: pages[page].title,
+        description: pages[page].shortDescription,
+        keywords: pages[page].category.join(', '),
+        url: pages[page]
+      },
+      assetIndex: 'note',
+    });
     await prerender({ page: `notes/${page}` });
   }
 }
