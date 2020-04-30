@@ -144,7 +144,6 @@ class Notes extends HTMLElement {
     setTimeout(() => { // TODO - Refactor the flow of this
       Array.from(this._filters.children).forEach(filter => {
         const input = filter.querySelector('.ty-checkbox-input');
-        console.log(input.value, category)
         input.checked = input.value === category;
         input.dispatchEvent(new Event('change', { bubbles: true }));
       });

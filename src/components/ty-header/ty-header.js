@@ -25,7 +25,11 @@ class TyHeader extends HTMLElement {
   _setCurrentNav() {
     const navs = this.querySelectorAll('.ty-header-nav');
     Array.from(navs).forEach(nav => {
-      const isCurrentRoute = nav.href === window.location.href;
+      const origin = `${window.location.origin}`;
+      const pathname = `${window.location.pathname}`;
+      const isCurrentRoute = nav.href === `${origin}/`
+        ? nav.href === `${origin}${pathname}` // If index, compare strictly
+        : `${origin}${pathname}`.includes(nav.href); // If other route, compare inclusively
       nav.classList[isCurrentRoute ? 'add' : 'remove']('ty-header-nav--current');
     });
   }
