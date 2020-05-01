@@ -71,7 +71,7 @@ class Notes extends HTMLElement {
 
     this._categories = categories;
 
-    if (!categories.length) {
+    if (!categories.length || (this._filters.childElementCount === categories.length)) {
       return;
     }
 
@@ -86,6 +86,9 @@ class Notes extends HTMLElement {
   }
 
   _renderNotes(notes) {
+    if (this._previews.childElementCount === notes.length) {
+      return;
+    }
     notes.sort((a, b) => new Date(b?.fields?.date) - new Date(a?.fields?.date));
     const notesFragment = new DocumentFragment();
     notes.forEach(note => {

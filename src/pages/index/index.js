@@ -40,6 +40,9 @@ class Index extends HTMLElement {
 
   setData(data) {
     const portfolioItems = data?.data?.items || [];
+    if (this._cardsContainer.childElementCount === portfolioItems.length) {
+      return;
+    }
     portfolioItems.sort((a, b) => a?.fields?.order - b?.fields?.order);
     const assets = data?.data?.includes?.Asset;
     this._setCards(portfolioItems, assets);
