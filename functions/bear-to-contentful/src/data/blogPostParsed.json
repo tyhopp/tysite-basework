@@ -1,0 +1,10 @@
+{
+  "fields": {
+    "title": { "en-US": "A test title" },
+    "slug": { "en-US": "test-url" },
+    "date": { "en-US": "2019-12-15" },
+    "shortDescription": { "en-US": "A test description" },
+    "category": { "en-US": "JavaScript, Swift" },
+    "body": { "en-US": "A test body" }
+  }
+}

@@ -1,5 +1,5 @@
 
-    const getPages = async () => ["index","not-found","notes","styled-components-media-queries","responsive-svg","color-extensions-swift","list-in-swift-ui","js-in-ios-scriptable","aws-lambda-functions-in-netlify","programmatic-publishing-to-contentful","aws-api-gateway-gotchas","bear-as-an-authoring-tool","publishing-automation","ffmpeg-crosshatch","internet-hoarders","styled-components-media-queries","responsive-svg","color-extensions-swift","list-in-swift-ui","js-in-ios-scriptable","aws-lambda-functions-in-netlify","programmatic-publishing-to-contentful","aws-api-gateway-gotchas","bear-as-an-authoring-tool","publishing-automation","ffmpeg-crosshatch","internet-hoarders"];
+    const getPages = async () => ["index","not-found","notes","programmatic-publishing-to-contentful","ffmpeg-crosshatch","bear-as-an-authoring-tool","publishing-automation","aws-lambda-functions-in-netlify","js-in-ios-scriptable","styled-components-media-queries","responsive-svg","color-extensions-swift","list-in-swift-ui","aws-api-gateway-gotchas","internet-hoarders"];
 
     module.exports = {
       getPages
