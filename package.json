@@ -1,5 +1,5 @@
 {
-  "name": "tysite-webpack",
+  "name": "tysite",
   "version": "1.0.0",
   "description": "The personal website of Ty Hopp, built with Basework.",
   "main": "index.js",
