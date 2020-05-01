@@ -1,10 +1,10 @@
 const { getSubPageData } = require('./get-sub-page-data');
 const { updateBaseworkIndex } = require('./update-basework-index');
 const { ensurePathExists } = require('./ensure-path-exists');
-const { prefetch } = require('basework/prefetch');
-const { transform } = require('basework/transform');
-const { create } = require('basework/create');
-const { prerender } = require('basework/prerender');
+const { prefetch } = require('basework-core/prefetch');
+const { transform } = require('basework-core/transform');
+const { create } = require('basework-core/create');
+const { prerender } = require('basework-core/prerender');
 
 const createSubPages = async () => {
   const data = await getSubPageData();

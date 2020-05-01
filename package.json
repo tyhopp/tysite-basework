@@ -1,19 +1,21 @@
 {
   "name": "tysite-webpack",
-  "version": "0.0.1",
-  "description": "",
-  "private": true,
+  "version": "1.0.0",
+  "description": "The personal website of Ty Hopp, built with Basework.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "basework start",
     "build": "basework build"
   },
-  "keywords": [],
+  "keywords": [
+    "basework",
+    "web-components"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "basework": "file:../basework/basework-core-0.0.4.tgz",
+    "basework-core": "0.1.0",
     "node-fetch": "^2.6.0"
   }
 }
