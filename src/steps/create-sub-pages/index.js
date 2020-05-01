@@ -33,7 +33,7 @@ const createSubPages = async () => {
         title: pages[page].title,
         description: pages[page].shortDescription,
         keywords: pages[page].category.join(', '),
-        url: pages[page]
+        url: `https://tyhopp.com/notes/${pages[page].slug}`
       },
       assetIndex: 'note',
     });

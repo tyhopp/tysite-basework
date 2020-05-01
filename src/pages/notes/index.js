@@ -54,7 +54,7 @@ class Notes extends HTMLElement {
     const notes = data?.data?.items || [];
     this._renderFilters(notes);
     this._renderNotes(notes);
-    this._checkQueryParams();
+    setTimeout(() => this._checkQueryParams(), 0); // TODO - Refactor
   }
 
   _setListeners(flag) {
@@ -87,8 +87,8 @@ class Notes extends HTMLElement {
 
   _renderNotes(notes) {
     notes.sort((a, b) => new Date(b?.fields?.date) - new Date(a?.fields?.date));
+    const notesFragment = new DocumentFragment();
     notes.forEach(note => {
-      // TODO - Refactor to use document fragment
       const preview = document.createElement('article');
       const title = document.createElement('h3');
       const titleAnchor = document.createElement('a');
@@ -111,8 +111,9 @@ class Notes extends HTMLElement {
       });
       preview.appendChild(categories);
       preview.dataset.categories = note?.fields?.category;
-      this._previews.appendChild(preview);
+      notesFragment.appendChild(preview);
     });
+    this._previews.appendChild(notesFragment);
   }
 
   _checkQueryParams() {
