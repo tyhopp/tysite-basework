@@ -62,6 +62,13 @@ class Notes extends HTMLElement {
   }
 
   setState() {
+    // Is first page load
+    if (!this._categories && !this._activeCategories && !this._filters) {
+      this._filters = this.querySelector('.notes-filters');
+      const categories = Array.from(this._filters.children).map(filter => filter.category);
+      this._categories = categories;
+      this._activeCategories = categories;
+    }
     setTimeout(() => this._checkQueryParams(), 0); // TODO - Refactor
   }
 
