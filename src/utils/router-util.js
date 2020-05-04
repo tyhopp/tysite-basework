@@ -2,52 +2,10 @@ import { xhr } from './xhr-util';
 import { prefetchNextPageData } from './prefetch-util';
 
 (() => {
-  const getPages = () => {
+  const removePages = () => {
     const main = document.querySelector('main');
-    const pages = Array.from(main.children);
-    return pages;
-  }
-
-  const hidePages = () => {
-    const pages = getPages();
-    for (const page of pages) {
-      page.hidden = true;
-    }
-  }
-
-  const showPage = targetPage => {
-    const pages = getPages();
-    
-    if (!pages.length) {
-      return false;
-    }
-
-    let targetTagName = `page-${targetPage}`;
-    let targetPageName = targetPage;
-    const targetPageParts = targetPage.split('/');
-
-    if (targetPageParts.length > 1) {
-      targetTagName = 'page-note'; // TODO - Generalize this
-      targetPageName = targetPageParts[targetPageParts.length - 1];
-    }
-
-    const idsMatch = (page, targetPageName) => {
-      const id = page.getAttribute('id');
-      if (!id) {
-        return true; // If no id, implicit true
-      }
-      return id === targetPageName;
-    }
-
-    for (const page of pages) {
-      const tagsMatch = page.tagName.toLowerCase() === targetTagName;
-      if (tagsMatch && idsMatch(page, targetPageName)) {
-        page.hidden = false;
-        if (typeof page.setState === 'function') {
-          page.setState();
-        }
-        return true;
-      }
+    if (main.children.length) {
+      Array.from(main.children).forEach(child => child.remove());
     }
   }
 
@@ -61,7 +19,7 @@ import { prefetchNextPageData } from './prefetch-util';
   const setPageData = (pageElem, data) => {
     try {
       const json = JSON.parse(data);
-      if (typeof pageElem.setData === 'function') {
+      if (pageElem.setData && typeof pageElem.setData === 'function') {
         pageElem.setData(json);
       }
     } catch (error) {
@@ -93,13 +51,7 @@ import { prefetchNextPageData } from './prefetch-util';
     }
 
     // Remove old template
-    hidePages();
-
-    // If page exists already, show that and call it a day
-    const shown = showPage(page);
-    if (shown) {
-      return;
-    }
+    removePages();
 
     // Check if is sub route
     const routeParts = page.split('/');
