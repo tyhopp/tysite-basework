@@ -62,6 +62,8 @@ import { prefetchNextPageData } from './prefetch-util';
         const pageElem = createPage(note);
         xhr(`${pageName}-data.json`).then(data => {
           setPageData(pageElem, data);
+        }).then(() => {
+          dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
         });
       });
       return;
@@ -73,6 +75,8 @@ import { prefetchNextPageData } from './prefetch-util';
       xhr(`${page}-data.json`).then(data => {
         setPageData(pageElem, data);
         prerenderNextPages(pageElem, !isPrerendering);
+      }).then(() => {
+        dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
       });
     });
   }
