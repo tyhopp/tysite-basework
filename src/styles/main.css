@@ -139,6 +139,6 @@ blockquote p {
   padding: 0 1em;
 }
 
-.hidden {
+[hidden] {
   display: none;
 }

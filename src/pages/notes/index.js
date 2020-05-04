@@ -51,9 +51,17 @@ class Notes extends HTMLElement {
   }
 
   setData(data) {
-    const notes = data?.data?.items || [];
-    this._renderFilters(notes);
-    this._renderNotes(notes);
+    this._notes = data?.data?.items || [].sort((a, b) => new Date(b?.fields?.date) - new Date(a?.fields?.date));
+    this._categories = this._notes
+      .map(note => note?.fields?.category)
+      .flat()
+      .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
+    this._activeCategories = this._notes;
+    this._renderFilters();
+    this._renderNotes();
+  }
+
+  setState() {
     setTimeout(() => this._checkQueryParams(), 0); // TODO - Refactor
   }
 
@@ -63,21 +71,14 @@ class Notes extends HTMLElement {
     this._previews[fnName]('click', this._onCategorySelect);
   }
 
-  _renderFilters(notes) {
-    const categories = notes
-      .map(note => note?.fields?.category)
-      .flat()
-      .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
-
-    this._categories = categories;
-
-    if (!categories.length || (this._filters.childElementCount === categories.length)) {
+  _renderFilters() {
+    if (!this._categories.length || (this._filters.childElementCount === this._categories.length)) {
       return;
     }
 
     importCheckbox
       .then(() => {
-        categories.forEach(category => {
+        this._categories.forEach(category => {
           const checkbox = document.createElement('ty-checkbox');
           this._filters.appendChild(checkbox);
           checkbox.setData(category);
@@ -85,13 +86,12 @@ class Notes extends HTMLElement {
       });
   }
 
-  _renderNotes(notes) {
-    if (this._previews.childElementCount === notes.length) {
+  _renderNotes() {
+    if (this._previews.childElementCount === this._notes.length) {
       return;
     }
-    notes.sort((a, b) => new Date(b?.fields?.date) - new Date(a?.fields?.date));
     const notesFragment = new DocumentFragment();
-    notes.forEach(note => {
+    this._notes.forEach(note => {
       const preview = document.createElement('article');
       const title = document.createElement('h3');
       const titleAnchor = document.createElement('a');
@@ -122,33 +122,37 @@ class Notes extends HTMLElement {
   _checkQueryParams() {
     const params = new URLSearchParams(window.location.search);
     const category = params.get('category');
+
     if (category && this._categories.some(validCategory => validCategory === category)) {
-      this._updateFilters(category);
+      this._updateFilters({ category });
+    } else {
+      this._updateFilters({ reset: true });
     }
   }
 
   _filterNotes() {
     Array.from(this._previews.children).forEach(note => {
       const noteCategories = note.dataset.categories.split(',');
-      const noteHasActiveCategory = noteCategories.some(noteCategory => this._categories.includes(noteCategory));
+      const noteHasActiveCategory = noteCategories.some(noteCategory => this._activeCategories.includes(noteCategory));
       this._highlightActiveCategories(note);
-      const fnName = noteHasActiveCategory ? 'remove' : 'add';
-      note.classList[fnName]('hidden');
+      note.hidden = !noteHasActiveCategory;
     });
   }
 
   _highlightActiveCategories(note) {
     const noteCategories = note.querySelectorAll('ty-tag');
     noteCategories.forEach(noteCategory => {
-      noteCategory.setAttribute('active', this._categories.includes(noteCategory.getAttribute('value')));
+      noteCategory.setAttribute('active', this._activeCategories.includes(noteCategory.getAttribute('value')));
     });
   }
 
-  _updateFilters(category) {
+  _updateFilters({ reset = false, category }) {
     setTimeout(() => { // TODO - Refactor the flow of this
       Array.from(this._filters.children).forEach(filter => {
         const input = filter.querySelector('.ty-checkbox-input');
-        input.checked = input.value === category;
+        input.checked = reset
+          ? true
+          : input.value === category;
         input.dispatchEvent(new Event('change', { bubbles: true }));
       });
     }, 0);
@@ -157,11 +161,11 @@ class Notes extends HTMLElement {
   _onFilterSelect(e) {
     const category = e.target.value;
     const checked = e.target.checked;
-    if (checked && !this._categories.includes(category)) {
-      this._categories.push(category);
+    if (checked && !this._activeCategories.includes(category)) {
+      this._activeCategories.push(category);
     }
-    if (!checked && this._categories.includes(category)) {
-      this._categories = this._categories.filter(filterCategory => filterCategory !== category);
+    if (!checked && this._activeCategories.includes(category)) {
+      this._activeCategories = this._activeCategories.filter(filterCategory => filterCategory !== category);
     }
     this._filterNotes();
     window.scrollTo(0, 0);
@@ -169,8 +173,8 @@ class Notes extends HTMLElement {
 
   _onCategorySelect(e) {
     if (e.target.tagName === 'TY-TAG') {
-      this._categories = this._categories.filter(filterCategory => filterCategory !== e.target.textContent);
-      this._updateFilters(e.target.textContent);
+      this._activeCategories = this._activeCategories.filter(filterCategory => filterCategory !== e.target.textContent);
+      this._updateFilters({ category: e.target.textContent });
     }
   }
 }

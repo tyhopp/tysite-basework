@@ -25,8 +25,9 @@ class Note extends HTMLElement {
     this._setListeners(false);
   }
 
-  setData({ data: { title, date, category: categories, body } }) {
+  setData({ data: { title, slug, date, category: categories, body } }) {
     this._title.textContent = title;
+    this.setAttribute('id', slug);
     this._date.setAttribute('datetime', date);
     this._date.textContent = date;
     importTag.then(() => {
