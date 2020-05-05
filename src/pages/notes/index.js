@@ -40,10 +40,10 @@ class Notes extends HTMLElement {
     })
       .then(response => response.json())
       .then(data => {
-        const transformations = {
-          'markdown-to-html': ['data.items.fields.body']
-        }
-        return { transformations, data }
+        return data.items.map(item => {
+          const { title, slug, date, category } = item.fields;
+          return { title, slug, date, category };
+        });
       })
       .catch(error => {
         console.error(error);
@@ -51,9 +51,9 @@ class Notes extends HTMLElement {
   }
 
   setData(data) {
-    this._notes = data?.data?.items || [].sort((a, b) => new Date(b?.fields?.date) - new Date(a?.fields?.date));
+    this._notes = data || [].sort((a, b) => new Date(b?.date) - new Date(a?.date));
     this._categories = this._notes
-      .map(note => note?.fields?.category)
+      .map(note => note?.category)
       .flat()
       .reduce((prev, curr) => prev.includes(curr) ? prev : [...prev, curr], []);
     this._activeCategories = this._notes;
@@ -107,12 +107,12 @@ class Notes extends HTMLElement {
       title.classList.add('notes-preview-item-title');
       titleAnchor.classList.add('notes-preview-item-title-anchor');
       categories.classList.add('notes-preview-item-categories');
-      title.textContent = note?.fields?.title;
-      titleAnchor.setAttribute('href', `/notes/${note?.fields?.slug}`);
+      title.textContent = note?.title;
+      titleAnchor.setAttribute('href', `/notes/${note?.slug}`);
       titleAnchor.appendChild(title);
       preview.appendChild(titleAnchor);
       importTag.then(() => {
-        note?.fields?.category.forEach(category => {
+        note?.category.forEach(category => {
           const tag = document.createElement('ty-tag');
           tag.setAttribute('active', true);
           categories.appendChild(tag);
@@ -120,7 +120,7 @@ class Notes extends HTMLElement {
         });
       });
       preview.appendChild(categories);
-      preview.dataset.categories = note?.fields?.category;
+      preview.dataset.categories = note?.category;
       notesFragment.appendChild(preview);
     });
     this._previews.appendChild(notesFragment);
