@@ -12,6 +12,7 @@ class Note extends HTMLElement {
       this._date = this.querySelector('.note-date');
       this._categories = this.querySelector('.note-categories');
       this._body = this.querySelector('.note-body');
+      this._end = this.querySelector('.note-end');
       this._initialized = true;
     }
   }
@@ -30,6 +31,7 @@ class Note extends HTMLElement {
       });
     });
     this._body.innerHTML = body;
+    this._end.removeAttribute('hidden');
   }
 }
 

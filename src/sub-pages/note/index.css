@@ -33,11 +33,24 @@ page-note {
 }
 
 .note-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 3em 0;
-  padding: 1em;
+  padding: 1em 0 2em 0;
   border: 1px dashed var(--line);
 }
 
 .note-end-title {
-  margin: 0.5em 0;
+  margin: 0.25em 0;
+}
+
+.note-end-text {
+  margin: 0.25em 0;
+  text-align: center;
+  max-width: 300px;
+}
+
+[hidden] {
+  display: none;
 }

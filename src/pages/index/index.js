@@ -8,6 +8,7 @@ class Index extends HTMLElement {
     if (!this._initialized) {
       this.appendChild(document.getTemplate(template));
       this._cardsContainer = this.querySelector('.index-cards');
+      this._end = this.querySelector('.index-end');
       this._initialized = true;
     }
   }
@@ -46,6 +47,7 @@ class Index extends HTMLElement {
     portfolioItems.sort((a, b) => a?.fields?.order - b?.fields?.order);
     const assets = data?.data?.includes?.Asset;
     this._setCards(portfolioItems, assets);
+    this._end.removeAttribute('hidden');
   }
 
   _setCards(portfolioItems, assets) {
