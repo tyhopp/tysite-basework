@@ -12,16 +12,21 @@ ty-tag {
   user-select: none;
 }
 
-ty-tag:hover {
+ty-tag[readonly] {
+  cursor: initial;
+  border: 1px dashed var(--line);
+}
+
+ty-tag:hover:not([readonly]) {
   background-color: var(--primary-tint);
   border: 1px solid cornflowerblue;
 }
 
-ty-tag:active {
+ty-tag:active:not([readonly]) {
   background-color: var(--secondary-tint);
   border: 1px solid deepskyblue;
 }
 
-ty-tag[active=true] {
+ty-tag[active=true]:not([readonly]) {
   background-color: var(--primary-tint);
 }
