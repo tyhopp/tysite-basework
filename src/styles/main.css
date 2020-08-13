@@ -63,7 +63,8 @@ main[id=pages] {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: 'Quincy', serif;
   font-weight: normal;
 }
@@ -88,6 +89,11 @@ h2 {
 h3 {
   font-size: 28px;
 	line-height: 36px;
+}
+
+h4 {
+  font-size: 24px;
+	line-height: 32px;
 }
 
 a {

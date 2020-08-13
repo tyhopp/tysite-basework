@@ -31,3 +31,13 @@ page-note {
 .note-category-anchor {
   width: fit-content;
 }
+
+.note-end {
+  margin: 3em 0;
+  padding: 1em;
+  border: 1px dashed var(--line);
+}
+
+.note-end-title {
+  margin: 0.5em 0;
+}
