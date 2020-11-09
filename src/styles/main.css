@@ -12,22 +12,22 @@
 }
 
 html {
-  --text: #151951;
+  --text: #000;
   --primary-tint: #F0F5FF;
   --secondary-tint: #E1EBFF;
   --line: #E3E3F1;
-  --background: #FFFFFF;
+  --background: #FFF;
   --highlight: lavender;
   --list: url(../assets/svg/list-item-light.svg);
 }
 
 @media (prefers-color-scheme: dark) {
   html {
-    --text: #FFFFFF;
-    --primary-tint: #10144b;
-    --secondary-tint: #1e225c;
+    --text: #FFF;
+    --primary-tint: #10144B;
+    --secondary-tint: #1E225C;
     --line: #424464;
-    --background: #01111f;
+    --background: #000;
     --highlight: lightslategray;
     --list: url(../assets/svg/list-item-dark.svg);
   }
@@ -47,10 +47,12 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
 body {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'system-ui', sans-serif;
   font-size: 16px;
   line-height: 26px;
+  letter-spacing: 0.2px;
   color: var(--text);
   font-weight: normal;
   margin: 0;
@@ -65,7 +67,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'Quincy', serif;
+  font-family: 'Quincy', 'system-ui', sans-serif;
   font-weight: normal;
 }
 
