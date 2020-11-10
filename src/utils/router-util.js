@@ -27,8 +27,8 @@ import { prefetchNextPageData } from './prefetch-util';
     }
   }
 
-  const prerenderNextPages = (page, shouldPrerender) => {
-    if (shouldPrerender) {
+  const prefetchNextPages = (page, shouldPrefetch) => {
+    if (shouldPrefetch) {
       try {
         prefetchNextPageData(page);
       } catch (error) {
@@ -80,7 +80,7 @@ import { prefetchNextPageData } from './prefetch-util';
         if (typeof pageElem.setState === 'function') {
           pageElem.setState();
         }
-        prerenderNextPages(pageElem, !isPrerendering);
+        prefetchNextPages(pageElem, !isPrerendering);
       }).then(() => {
         dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
       });
