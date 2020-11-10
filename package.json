@@ -14,7 +14,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "basework-core": "^0.1.6",
+    "basework-core": "^0.2.0-alpha.0",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "worker-loader": "^3.0.5"
   }
 }

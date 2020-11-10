@@ -1,5 +1,6 @@
 import { xhr } from './xhr-util';
-import { prefetchNextPageData } from './prefetch-util';
+import { getUrlParts } from './url-util';
+import Worker from '../workers/prefetch-worker';
 
 (() => {
   const removePages = () => {
@@ -27,10 +28,13 @@ import { prefetchNextPageData } from './prefetch-util';
     }
   }
 
-  const prefetchNextPages = (page, shouldPrefetch) => {
+  const prefetchNextPages = (pageElem, shouldPrefetch) => {
     if (shouldPrefetch) {
       try {
-        prefetchNextPageData(page);
+        const prefetchWorker = new Worker();
+        const anchors = Array.from(pageElem.querySelectorAll(`a[href^="/"]`));
+        const paths = new Set(anchors.map(anchor => getUrlParts(anchor.href).pathname.replace(/\//, '')));
+        prefetchWorker.postMessage(paths);
       } catch (error) {
         console.warn('Failed to prefetch next page data', error);
       }
