@@ -62,33 +62,53 @@ import Worker from '../workers/prefetch-worker';
     if (routeParts.length > 1) {
       const note = 'note'; // TODO - Generalize this
       const pageName = routeParts[routeParts.length - 1];
-      import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../sub-pages/${note}`).then(() => {
-        const pageElem = createPage(note);
-        xhr(`${pageName}-data.json`).then(data => {
-          setPageData(pageElem, data);
-          if (typeof pageElem.setState === 'function') {
-            pageElem.setState();
-          }
-        }).then(() => {
-          dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
+      import(
+        /*
+        webpackChunkName: "[request]",
+        webpackInclude: /\.js$/,
+        webpackPreload: true
+        */
+       `../sub-pages/${note}`
+      )
+        .then(() => {
+          const pageElem = createPage(note);
+          xhr(`${pageName}-data.json`)
+            .then(data => {
+              setPageData(pageElem, data);
+              if (typeof pageElem.setState === 'function') {
+                pageElem.setState();
+              }
+            })
+            .then(() => {
+              dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
+            });
         });
-      });
-      return;
+        return;
     }
 
     // Fetch bundle and render template
-    import(/* webpackChunkName: "[request]", webpackInclude: /\.js$/ */ `../pages/${page}`).then(() => {
-      const pageElem = createPage(page);
-      xhr(`${page}-data.json`).then(data => {
-        setPageData(pageElem, data);
-        if (typeof pageElem.setState === 'function') {
-          pageElem.setState();
-        }
-        prefetchNextPages(pageElem, !isPrerendering);
-      }).then(() => {
-        dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
+    import(
+      /*
+      webpackChunkName: "[request]",
+      webpackInclude: /\.js$/,
+      webpackPreload: true
+      */
+     `../pages/${page}`
+    )
+      .then(() => {
+        const pageElem = createPage(page);
+        xhr(`${page}-data.json`)
+          .then(data => {
+            setPageData(pageElem, data);
+            if (typeof pageElem.setState === 'function') {
+              pageElem.setState();
+            }
+            prefetchNextPages(pageElem, !isPrerendering);
+          })
+          .then(() => {
+            dispatchEvent(new CustomEvent('basework-complete', { bubbles: true }));
+          });
       });
-    });
   }
 
   navigate(window.location.pathname);
