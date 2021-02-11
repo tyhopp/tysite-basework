@@ -18,6 +18,10 @@ ty-card {
   width: 100%;
 }
 
+.ty-card-description--singapore-exchange li {
+  list-style: url('../../assets/svg/list-item-blue.svg');
+}
+
 .ty-card-description--flyright li {
   list-style: url('../../assets/svg/list-item-purple.svg');
 }

@@ -33,7 +33,9 @@ class TyCard extends HTMLElement {
     this._title.textContent = title;
     this._position.textContent = position;
     this._description.innerHTML = description;
-    this._description.classList.add(`ty-card-description--${title.toLowerCase()}`);
+    this._description.classList.add(
+      `ty-card-description--${title.replace(/\s/, '-').toLowerCase()}`
+    );
     this._setButton({ href: link, accent });
   }
 
