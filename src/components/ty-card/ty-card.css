@@ -13,6 +13,10 @@ ty-card {
   margin: 0;
 }
 
+.ty-card-title {
+  text-align: center;
+}
+
 .ty-card-description {
   margin-bottom: 0.25em;
   width: 100%;
